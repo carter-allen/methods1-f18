@@ -2,9 +2,11 @@
 
 ### Labs
 
-- [Lab 1 - Introductions](l1.html)
+- [Lab 0 - Introductions](l0.html)
 
 ### Data
+
+- [mtcars](mtcars.csv)
 
 ### Exam Reviews
 

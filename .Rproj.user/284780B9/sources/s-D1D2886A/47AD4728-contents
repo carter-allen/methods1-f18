@@ -1,0 +1,296 @@
+---
+title: "Final Project"
+author: "Carter Allen"
+date: "7/24/2018"
+output: 
+  pdf_document:
+    includes:
+      in_header: fig.tex
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, message = FALSE)
+library(tidyverse)
+library(magrittr)
+library(car)
+library(knitr)
+library(tableone)
+library(patchwork)
+library(broom)
+library(MVN)
+library(kableExtra)
+```
+
+# Introduction
+
+It is believed that administration of acetaminophen, either orally or intravenously, could be effective in managing pain in mothers who undergo cesarean section births. This analysis primarily seeks to assess the impact of acetaminophen administration on pain management in a sample of mothers who undergo cesarean sections. Pain management is measured in terms of the total dose of opiates consumed in the hospital and the time until first request of opiates after giving birth. Secondarily, the impact of acetaminophen on patient reported pain will be examined, where patient reported pain is measured on the visual analog scale both at rest and during ambulation. It is also of interest to determine if the administration of acetaminophen is associated with increased risk of adverse events such as nausea, vomiting, and pruritis. Lastly, differences between treatment groups in time from procedure to discharge and patient satisfaction will be investigated. 
+
+The present data come from a randomized control trial where patients were given either no acetaminophen, oral acetaminophen, or IV acetaminophen. The total sample of 141 was randomized evenly to the three study arms, giving a total of 47 patients in each treatment group. Baseline characteristics of this study population by treatment group is given in Table 1. The p-values given in Table 1 suggest there might be reason to believe there is a significant difference in mean age, anesthesia duration, and parity among treatment groups, indicating a lack of perfect randomization of these potential prognostic variables. Whether or not the statistical imbalance between treatment groups on these baseline covariates has a significant clinical meaning is a determination that will be left to the reader. 
+
+# Methodology
+
+## Data pre-processing
+
+Note that one of the primary outcomes, total opiates consumed, was derived in IV morphine equivalents from the recorded doses of IV Morphine, Dilaudid, Hydromorphone, Hydrocodone, and Oxycodone according to the following conversion shown in Equation 1.
+\begin{equation}
+total \ op. = (5/3)Dilaudid + (5)Hydromorphone + (1/3)Hydrocodone + (1/2)Oxycodone + Morphine
+\end{equation}
+Data entry errors were also discovered upon exploratory analysis. The height and weight values for patient 3 were transposed, the weight of patient 45 was recorded as 24.6 kg instead of the correct 124.6 kg, and the age of patient 77 was recorded as 13 instead of the correct 31. These errors were corrected before proceeding with exploratory analyses. Missing data was only a minor issue in this analysis. There were three observations missing from the weight variable and two missing from the patient satisfaction variable. Since missing data made up such a small proportion of the total analysis set, observations with missing data were excluded from the analysis. Since there were only two individuals of Asian race in the data set, the variable `race_2` was defined to condense `race` into a factor variable with levels White (n  = 83) and Not White (n = 58).
+
+```{r}
+study_data <- read_csv("StudentProjectData_Opiates.csv")
+```
+
+```{r}
+study_data %<>%
+  transmute(id = id,
+            total_op = 
+             IV_Morphine + 
+             Dilaudid / 0.6 + 
+             Hydromorphone / 0.2 + 
+             Hydrocodone / 3.0 + 
+             Oxycodone / 2.0,
+           trt = relevel(as.factor(TreatmentGrp),
+                         ref = "No Acetaminophen"),
+           time_to_dose_hrs = TimeToFirstDose,
+           VAS_rest = Resting_VAS,
+           VAS_amb = Ambulating_VAS,
+           nausea = factor(Nausea,
+                           levels = c(0,1),
+                           labels = c("No","Yes")),
+           vomit = factor(Vomit,
+                          levels = c(0,1),
+                          labels = c("No","Yes")),
+           pruritis = factor(Pruritis,
+                             levels = c(0,1),
+                             labels = c("No","Yes")),
+           time_to_dis_hrs = TimeMeetDischargeCriteria,
+           satisf = Satisfaction,
+           age = age,
+           race = relevel(as.factor(race),
+                          ref = "White"),
+           wt = wt_kg,
+           ht = ht_in,
+           parity = Parity,
+           prior_csec = relevel(as.factor(PriorCsection),
+                                ref = "No"),
+           n_prior_csec = as.integer(replace_na(NumberCsection,0)),
+           anesth_dur_mins = anesth_dur,
+           race_2 = ifelse(race == "White","White","Not-White"),
+           race_2 = relevel(as.factor(race_2),"White"))
+```
+
+```{r}
+study_data[3,14] = 117
+study_data[3,15] = 70.8
+```
+
+```{r}
+study_data[77,12] = 31
+```
+
+```{r}
+study_data[45,14] = 124.6
+```
+
+```{r}
+study_data %<>%
+  mutate(z_total_op = scale(total_op),
+         z_time_to_dose_hrs = scale(time_to_dose_hrs),
+         z_VAS_rest = scale(VAS_rest),
+         z_VAS_amb = scale(VAS_amb))
+```
+
+## Univariate Distributions
+
+To inform later analyses, univariate distributions of outcomes of interest, conditional on the primary exposure, are given. Figure 1 shows the distributions of the primary outcomes, total opiates consumed and time to first dose request, in each treatment group. The distributions of the secondary outcomes are displayed similarly in Figure 2. Adverse events for each treatment group are displayed in Table 2, followed by the distributions of other events, time to discharge eligibility and satisfaction score, for each treatment group in Figure 3.
+
+## Modeling primary and secondary outcomes
+
+Statistical models were developed to assess the impact of treatment group on each set of outcomes, and to identify other covariates besides treatment group that contribute significantly to each outcome. In light of significant correlation between the two primary outcomes, total opiates consumed and time to first dose request ($\hat{\rho} \approx -0.63, p < 0.0001$), as well as between the two secondary outcomes, VAS at rest and with ambulation ($\hat{\rho} \approx 0.64, p < 0.0001$), a multivariate multiple regression approach was taken, where each pair of outcomes was treated as a bivariate outcome variable. A "full model" was fit with the bivariate outcomes as the response, and treatment group as the exposure. A selection of covariates thought to be potentially clinically meaningful were included in the full model. Variable selection was performed using the p-value associated with tests of significance of each covariate as the primary statistical criterion, and this information was weighed against clinical reasoning for inclusion of certain covariates. The validity of the model assumptions were investigated using Henze-Zirkler’s test for multivariate normality of model residuals. Outliers were detected using the robust Mahalanobis distance criteria and sensitivity analysis was performed between the full data and a reduced data set with outliers removed. 
+
+For each model, the significance of treatment group effect adjusting for significant covariates was assessed using a likelihood ratio procedure, where Wilks' $\Lambda$ criterion was compared to its exact F distribution. A similar approach was taken to evaluate the effect of treatment group across outcomes for each model. Unique outcomes were standardized before these comparisons were made.
+
+## Other outcomes
+
+While this study was not designed with sufficient power to detect adverse events, an ad-hoc analysis of adverse events (nausea, vomiting, pruritis) was performed. Either chi-squared tests or Fisher's exact tests were used as appropriate to test the independence of each of these variables with treatment group. Finally, the other outcomes, time to discharge eligibility and patient satisfaction will not be treated multivariately, as there was no significant correlation detected between these variables ($\hat{\rho} \approx 0.05, p \approx 0.55$). Thus, univariate models were constructed for each of these other outcomes. In each univariate model, all possibly meaningful covariates beyond treatment group were included and p-values were given for tests of significance of their respective coefficients. Univariate models were also assessed for validity of model assumptions using diagnostic plots and the Shapiro-Wilk normality test of residuals. 
+
+# Results 
+
+## Primary outcomes
+
+Visual inspection of Figure 1 reveals an apparent difference in the distribution of total opiates consumed between the IV acetaminophen treatment group and the other two treatment groups, while there is no clear difference between the control group and PO acetaminophen with respect to total opiates consumed. Specifically, the distribution of total opiates consumed seems lower in the IV acetaminophen group than the two treatment groups. Similarly, the distribution of time to first rescue dose in the IV acetaminophen group appears higher than such distributions in both of the other treatment groups. These informal observations are supported by results from multivariate regression models primary outcomes by treatment group. 
+
+The fitting of a "full model" including treatment group and all other potentially meaningful clinical prognostic variables revealed no significant predictors of primary outcomes other than treatment group. There is also clinical reasoning for including age and race as additional covariates. Thus, a reduced multivariate multiple regression model with treatment group, age, and race as the exposures was fit. The coefficient estimates and associated statistics for this model are presented in Table 3. Serious precaution should be taken in interpreting these models, as the assumption of multivariate normality of the residuals was violated (Henze-Zirkler p-value $\approx$ 0). Consulting the associated multivariate $\chi^2$ QQ plot of the model residuals in Figure 4 leads to the suspicion that this lack of normality is likely due to a few outliers. However, while the robust Mahalanobis distance criterion flagged 16 observations as outliers, removing these outliers did not correct the violation of multivariate normality of the residuals according to the Henze-Zirkler criterion. Box-Cox, log, and square root transformations were all implemented on the outcomes, but none were able to normalize the model residuals. We are left with the central limit theorem and a relatively large sample size as assurance of the validity of this model.  
+
+In this model, IV acetaminophen was associated with a reduction in average total opiates consumed of 10.96 IV morphine equivalents (Testing $H_0: \beta_{IV,total} = 0$ gave a p-value $\approx 0$), while oral acetaminophen was associated with a reduction in average total opiates consumed of only 1.53 IV morphine equivalents (p-value $\approx 0.55$), both relevant to the no acetaminophen control group. The treatment effect of IV morphine on average time to first rescue dose was an increase of 8.87 hours (p-value $\approx 0$), while the effect of oral acetaminophen was an increase of only 1.64 hours (p-value $\approx 0.52$). 
+
+The multivariate likelihood ratio test of the null hypothesis  $H_0:\mathbf{\beta}_{PO} = \begin{bmatrix} \beta_{PO,total} & \beta_{PO,time} \end{bmatrix}' = \mathbf{0}$ gave a Wilks' lambda exact p-value of roughly 0.83, indicating no evidence of significant differences in primary outcomes between the no acetaminophen and oral acetaminophen groups. The same test of $H_0:\mathbf{\beta}_{IV} = \begin{bmatrix} \beta_{IV,total} & \beta_{IV,time} \end{bmatrix}' = \mathbf{0}$ gave a Wilks' lambda exact p-value of approximately zero, indicating strong evidence of significant differences in primary outcomes between the no acetaminophen and IV acetaminophen groups. The same test between the two acetaminophen groups gave a Wilks' lambda exact p-value of approximately zero, indicating strong evidence of significant differences in primary outcomes between the PO acetaminophen and IV acetaminophen groups. 
+
+The likelihood ratio test of the null hypothesis that the effect of oral acetaminophen is the same across standardized total opiates consumed and time to first dose, or $H_0: -\beta_{PO,z-total} = \beta_{PO,z-time}$ gave a Wilks' lambda exact p-value of approximately 0.97, indicating no evidence against this hypothesis. Note that the negative sign was added to the coefficient for total opiates consumed because a favorable treatment effect for total opiates is a reduction compared to control while a favorable treatment effect for time to first dose is an increase relative to control. We wish to test whether the magnitude of effect is similar across outcomes. A similar test of $H_0: -\beta_{IV,z-total} = \beta_{IV,z-time}$ gave a Wilks' lambda exact p-value of roughly 0.21, again providing no strong evidence against this hypothesis that the magnitude of treatment effect is the same across standardized outcomes. This result conforms to expectation, as the effect of IV acetaminophen appeared to be negative for total opiates consumed but positive for time to first dose request. 
+
+## Secondary outcomes
+
+Figure 2 depicts lower distributions of VAS scores in the two acetaminophen groups relative to the control group. The anesthesia duration covariate was found to be a significant predictor of VAS at rest, and thus was included in the multivariate model along with treatment group. There were issues with the multivariate normality of the residuals for this model (HZ p-value <0.001) despite attempts at transformations. However, inspection of the multivariate $\chi^2$ QQ plot in Figure 5 suggests this deviation from multivariate normality is not too extreme, and perhaps the Henze-Zirkler test is being too strict. Again we will rely on the central limit theorem for justification of this model's validity.
+
+The multivariate likelihood ratio test of the null hypothesis  $H_0:\mathbf{\beta}_{PO} = \begin{bmatrix} \beta_{PO,rest} & \beta_{PO,amb} \end{bmatrix}' = \mathbf{0}$ gave a Wilks' lambda exact p-value of roughly 0.19, indicating no evidence of significant differences in VAS at rest and ambulation between the no acetaminophen and oral acetaminophen groups. The same test of $H_0:\mathbf{\beta}_{IV} = \begin{bmatrix} \beta_{IV,rest} & \beta_{IV,amb} \end{bmatrix}' = \mathbf{0}$ resulted in a Wilks' lambda exact p-value of approximately zero, providing evidence of significant differences between the IV acetaminophen group and no acetaminophen group. 
+
+To compare the effect of treatment group across VAS scores, a multivariate likelihood ratio test of $H_0: \mathbf{\beta}_{PO,z-rest} = \mathbf{\beta}_{PO,z-amb}$ gave a Wilks' lambda exact p-value of 0.35, indicating no evidence against the equality of PO acetaminophen effects across VAS scores. However, there was evidence against this hypothesis for the effect of IV acetaminophen relative to no acetaminophen, as the p-value of roughly 0.03 for testing $H_0: \mathbf{\beta}_{IV,z-rest} = \mathbf{\beta}_{IV,z-amb}$. Specifically, the reduction in standardized VAS pain with ambulation associated with IV acetaminophen was about twice the reduction in standardized VAS pain at rest associated with IV acetaminophen ($\mathbf{\beta}_{IV,z-rest} \approx -0.43$, $\mathbf{\beta}_{IV,z-amb} \approx -0.81$). Similarly, the effect of anesthesia duration appears to be different between VAS resting score and VAS ambulating score, as the p-value for testing $H_0: \mathbf{\beta}_{anesth,z-rest} = \mathbf{\beta}_{anesth,z-amb}$ was about 0.03. Anesthesia duration in minutes was associated with increased pain in both scores, but the increase was about ten times higher for standardized VAS at rest than for standardized VAS during ambulation ($\mathbf{\beta}_{anesth,z-rest} \approx 0.008$, $\mathbf{\beta}_{anesth,z-rest} \approx 0.0009$). 
+
+## Other outcomes
+
+Adverse events in each treatment group are given in Table 2. The p-values given in this table must be interpreted keeping in mind that this study was not powered to detect adverse events. An informal comparison of each adverse event rate across the three treatment groups does not suggest any substantial differences. 
+
+The other outcomes, time to discharge eligibility and patient satisfaction, are each modeled univariately. Results from these models are given in Tables 5 and 6, respectively. It does not appear that treatment group is a significant predictor of either of these variables, after adjusting for other covariates. It appears that race and anesthesia duration are significantly associated with time to discharge eligibility, with longer anesthesia durations and being either Black or Asian both corresponding to longer times to discharge eligibility. 
+
+# Discussion
+
+The results presented here suggest that IV acetaminophen was the most effective treatment for improving primary pain outcomes of total opiates consumed and time to first dose request, after adjusting for age and race. Oral acetaminophen was also associated with modest improvements in primary pain outcomes. A limitation of this model is that the parametric assumptions of the model residuals were not fully satisfied. It appears that IV acetaminophen impacts total opiates consumed and time to first dose similarly. 
+
+It was also found that treatment was a significant predictor of secondary outcomes, VAS reported pain at rest and with ambulation, though only the IV acetaminophen group was significantly different than the control group. While the effect of IV acetaminophen was to improve pain scores at rest and with ambulation, the improvement of VAS at ambulation was about twice as dramatic as the improvement of VAS at rest associated with the IV acetaminophen group, after standardizing both outcomes. Anesthesia duration was also found to impact VAS pain scores, with longer durations being associated with higher pain scores. The effect of anesthesia duration was more pronounced for VAS score at rest.
+
+There did not appear to be significant differences in rates of adverse events between treatment groups, and neither of the other outcomes, time to discharge eligibility and patient satisfaction, were impacted significantly by treatment. 
+
+These results suggest IV acetaminophen is an effective treatment for multiple measures of pain for mothers who gave birth via a cesarean section procedure. 
+
+\newpage
+
+# Tables and Figures
+
+```{r}
+theme_set(theme_minimal(base_family = "serif"))
+```
+
+```{r, fig.cap="Empirical distributions of primary outcomes, total opiates and time to first dose request, in each treatment group"}
+p1 <- ggplot(data = study_data, aes(x = total_op)) + 
+  geom_histogram(bins = 15) +
+  facet_wrap(~ trt) +
+  xlab("Total opiates consumed in IV morphine equivalent")
+
+p2 <- ggplot(data = study_data, aes(x = time_to_dose_hrs)) + 
+  geom_histogram(bins = 8) +
+  facet_wrap(~ trt) +
+  xlab("Time from procedure to first request of pain medication (hours)")
+
+p1 + p2 + plot_layout(ncol = 1)
+```
+
+```{r, fig.cap="Empirical distributions of secondary outcomes, VAS at rest and with ambulation, for each treatment group"}
+p1 <- ggplot(data = study_data, aes(x = VAS_rest)) + 
+  geom_histogram(bins = 9) +
+  scale_x_continuous(breaks = seq(0,90,by = 10),limits = c(0,90)) + 
+  scale_y_continuous(breaks = seq(0,16,by = 2),limits = c(0,16)) + 
+  facet_wrap(~ trt) +
+  xlab("Pain on Visual Analog Scale at rest")
+
+p2 <- ggplot(data = study_data, aes(x = VAS_amb)) + 
+  geom_histogram(bins = 9) +
+  scale_x_continuous(breaks = seq(0,90,by = 10),limits = c(0,90)) +
+  scale_y_continuous(breaks = seq(0,16,by = 2),limits = c(0,16)) + 
+  facet_wrap(~ trt) +
+  xlab("Pain on Visual Analog Scale with ambulation")
+
+p1 + p2 + plot_layout(ncol = 1)
+```
+
+
+```{r,results="hide"}
+tbl1 <- study_data %>%
+  select(age,race,wt,ht,parity,prior_csec,n_prior_csec,anesth_dur_mins,trt) %>%
+  CreateTableOne(data = ., strata = "trt", vars = colnames(.)[-9]) %>%
+  print(quote = FALSE, noSpaces = TRUE,exact = "race")
+```
+
+```{r}
+kable(tbl1[,-5],"latex",caption = "Baseline characteristics of study population. Shown are p-values corresponding to ANOVA tests for continuous variables by treatment group, and a Fisher's exact test for race by treatment group. Weight is in kilograms and height is in inches.",booktabs = T) %>% kable_styling(latex_options = "striped") %>% add_indent(4:6)
+```
+
+```{r,results="hide"}
+tbl2 <- study_data %>% 
+  select(nausea,vomit,pruritis,trt) %>%
+  CreateTableOne(vars = colnames(.)[-4],strata = "trt") %>%
+  print(quote = FALSE, noSpaces = TRUE,exact = "vomit")
+```
+
+```{r}
+kable(tbl2[,-5],"latex",caption = "Adverse events in each treatment group. Chi-squared test p-values are provided for nausea and pruritis, and Fisher's exact test p-values are given for vomit. Note that the study was not powered to detect differences in adverse events among treatment groups.",booktabs = T) %>% kable_styling(latex_options = "striped")
+```
+
+```{r, fig.cap="Other outcomes. Distribution of the time between procedure and being eligible for discharge for mothers in each treatment group, followed by the distribution of satisfaction scores for mothers in each treatment group."}
+p1 <- ggplot(data = study_data, aes(x = time_to_dis_hrs)) + 
+  geom_histogram(bins = 10) + 
+  facet_wrap(~ trt) +
+  xlab("Time from procedure to eligible for discharge (hours)")
+
+p2 <- ggplot(data = study_data, aes(x = satisf)) + 
+  geom_histogram(bins = 10) + 
+  facet_wrap(~ trt) +
+  xlab("Patient satisfaction")
+
+p1 + p2 + plot_layout(ncol = 1)
+```
+
+```{r,include=FALSE}
+mlm0 <- lm(cbind(total_op,time_to_dose_hrs) ~ trt + age + race_2, data = study_data)
+```
+
+```{r}
+kable(tidy(mlm0),"latex",digits = 2,caption = "Regression coefficients for multivariate model of primary outcomes vs. treatment group.",booktabs = T) %>% kable_styling(latex_options = "striped")
+```
+
+```{r,include=FALSE}
+linearHypothesis(mlm0,hypothesis.matrix = c("trtIV Acetaminophen = 0"))
+```
+
+```{r,include=FALSE}
+linearHypothesis(mlm0,hypothesis.matrix = c("trtPO Acetaminophen = 0"))
+```
+
+```{r,include=FALSE}
+linearHypothesis(mlm0,hypothesis.matrix = c("trtIV Acetaminophen = trtPO Acetaminophen"))
+```
+
+```{r,fig.cap="Multivariate Chi-squared QQ plot for model of primary outcomes by treatment, age, and race."}
+mvnormR::mvt_chisq_qqplot(mlm0$residuals)
+```
+
+```{r}
+mlm1_2 <- lm(cbind(VAS_rest,VAS_amb) ~ trt +  anesth_dur_mins, data = study_data)
+```
+
+```{r}
+kable(tidy(mlm1_2),"latex",digits = 2,caption = "Regression coefficients for multivariate model of secondary outcomes vs. treatment group",booktabs = T) %>% kable_styling(latex_options = "striped")
+```
+
+```{r,include=FALSE}
+linearHypothesis(mlm1_2,hypothesis.matrix = c("trtIV Acetaminophen = 0"))
+```
+
+```{r,include=FALSE}
+linearHypothesis(mlm1_2,hypothesis.matrix = c("trtPO Acetaminophen = 0"))
+```
+
+```{r,include=FALSE}
+linearHypothesis(mlm1_2,hypothesis.matrix = c("trtIV Acetaminophen = trtPO Acetaminophen"))
+```
+
+```{r,fig.cap="Multivariate Chi-squared QQ plot for model of secondary outcomes by treatment and anesthesia duration."}
+mvnormR::mvt_chisq_qqplot(mlm1_2$residuals)
+```
+
+```{r}
+other_lm1 <- lm(time_to_dis_hrs ~ trt + age + race_2 + wt + ht + parity + prior_csec + n_prior_csec + anesth_dur_mins,data = study_data)
+```
+
+```{r}
+kable(tidy(other_lm1),"latex",digits = 2,caption = "Regression coefficients for univariate model of time to discharge eligibility vs. treatment group and other covariates",booktabs = T) %>% kable_styling(latex_options = "striped")
+```
+
+```{r}
+other_lm2 <- lm(satisf ~ trt + age + race_2 + wt + ht + parity + prior_csec + n_prior_csec + anesth_dur_mins,data = study_data)
+```
+
+```{r}
+kable(tidy(other_lm2),"latex",digits = 2,caption = "Regression coefficients for univariate model of patient satisfaction vs. treatment group and other covariates",booktabs = T) %>% kable_styling(latex_options = "striped")
+```
+
