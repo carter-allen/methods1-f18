@@ -1,0 +1,14 @@
+---
+title: "Lab 1 - Introductions"
+author: "Carter Allen"
+date: "8/1/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction to Biostatistics
+
+Methods 1 is an introductory course to biostatistics, a field that deals with the application of statistical methods and theories to the life sciences. Biostatistics seeks to formalize and quantify the scientific method by providing tools that allow for _inductive reasoning_. In contrast to _deductive reasoning_, where specific inferences are drawn from a more general theorem, inductive reasoning relies on observations (data) to arrive at more general theorems. With statistics, we can use data to better understand a given process, generate hypotheses regarding that process in general, and test the validity of our hypotheses against what we observed. This class will show  

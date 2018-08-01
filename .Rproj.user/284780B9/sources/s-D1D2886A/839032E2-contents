@@ -1,9 +1,11 @@
 # Methods 1 Lab
 
-## Handouts
+### Labs
 
-## Data
+- [Lab 1 - Introductions](l1.html)
 
-## Exam Reviews
+### Data
 
-## Slides (past semesters)
+### Exam Reviews
+
+### Slides (past semesters)
