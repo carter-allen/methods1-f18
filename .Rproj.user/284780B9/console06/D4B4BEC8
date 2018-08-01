@@ -1,0 +1,102 @@
+]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mWelcome to fish, the friendly interactive shell
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                               ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Jecho "# methods1-f18" >> README.md
+[30m(B[m[?2004l]0;echo  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kgit init
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mInitialized empty Git repository in /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs/.git/
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kgit add README.md
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kgit commit -m "first commit"
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[master (root-commit) 5079740] first commit
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K
+git remote add origin https://github.com/carter-allen/methods1-f18.git
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kgit push -u origin master
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m
+Counting objects: 3, done.
+Writing objects:  33% (1/3)   Writing objects:  66% (2/3)   Writing objects: 100% (3/3)   Writing objects: 100% (3/3), 225 bytes | 225.00 KiB/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To https://github.com/carter-allen/methods1-f18.git
+ * [new branch]      master -> master
+Branch 'master' set up to track remote branch 'master' from 'origin'.
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K
+[30m(B[m[?2004l]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K[7m^C[30m(B[m[K
+[Acarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K
+[K[A[43C]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kg[38;5;240mit push -u origin master[24D[30m(B[m[91mg[38;5;240mit push -u origin master[24D[30m(B[m[91mi[38;5;240mt push -u origin master[23D[30m(B[m[91mt[38;5;240m push -u origin master[22D[30m(B[m[1mgit(B[m[38;5;240m push -u origin master[22D[30m(B[m[1m (B[m[38;5;240mpush -u origin master[21D[30m(B[m [38;5;240mpush -u origin master[21D[30m(B[ms[K[36ms[30m(B[m[38;5;240mtatus[30m(B[m[36mt[38;5;240matus[30m(B[m[36ma[38;5;240mtus[30m(B[m[K
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mgit: 'sta' is not a git command. See 'git --help'.
+
+The most similar commands are
+	status
+	stage
+	stash
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kgit sta[1mgit(B[m [36msta[30m(B[m[36mt[30m(B[m[36mu[30m(B[m[38;5;240ms[30m(B[m[36ms[30m(B[m
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mOn branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   README.md[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.Rproj.user/[m
+	[31mlabs.Rproj[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K[7m^C[30m(B[m[K
+[Acarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K
+[K[A[43C]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kg[91mg[30m(B[m[38;5;240mit status[9D[30m(B[m[91mi[38;5;240mt status[30m(B[m[91mt[38;5;240m status[30m(B[m[1mgit(B[m[38;5;240m status[30m(B[m[1m (B[m[38;5;240mstatus[30m(B[m [38;5;240mstatus[30m(B[ma[K[38;5;240mdd README.md[12D[30m(B[m[36ma[38;5;240mdd README.md[12D[30m(B[m[36md[38;5;240md README.md[11D[30m(B[m[36md[38;5;240m README.md[10D[30m(B[m[K[K[K[K[K[91mgi[30m(B[m[K[Kg[91mg[30m(B[m[38;5;240mit status[9D[30m(B[m[91mi[38;5;240mt status[30m(B[m[91mt[38;5;240m status[30m(B[m[1mgit(B[m[38;5;240m status[30m(B[m[1m (B[m[38;5;240mstatus[30m(B[m [38;5;240mstatus[30m(B[mp[K[38;5;240mush -u origin master[20D[30m(B[m[36mp[38;5;240mush -u origin master[20D[30m(B[m[36mu[38;5;240msh -u origin master[19D[30m(B[m[36ml[30m(B[m[K[38;5;240ml[30m(B[m[36ml[30m(B[m
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mremote: Counting objects: 6, done.[K
+remote: Compressing objects:  25% (1/4)   [Kremote: Compressing objects:  50% (2/4)   [Kremote: Compressing objects:  75% (3/4)   [Kremote: Compressing objects: 100% (4/4)   [Kremote: Compressing objects: 100% (4/4), done.[K
+remote: Total 6 (delta 0), reused 0 (delta 0), pack-reused 0[K
+Unpacking objects:  16% (1/6)   Unpacking objects:  33% (2/6)   Unpacking objects:  50% (3/6)   Unpacking objects:  66% (4/6)   Unpacking objects:  83% (5/6)   Unpacking objects: 100% (6/6)   Unpacking objects: 100% (6/6), done.
+From https://github.com/carter-allen/methods1-f18
+   5079740..d7ccaa0  master     -> origin/master
+Updating 5079740..d7ccaa0
+Fast-forward
+ _config.yml | 1 [32m+[m
+ 1 file changed, 1 insertion(+)
+ create mode 100644 _config.yml
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K[7m^C[30m(B[m[K
+[Acarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K
+[K[A[43C]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kg[91mg[30m(B[m[38;5;240mit pull[30m(B[m[91mi[38;5;240mt pull[30m(B[m[91mt[38;5;240m pull[30m(B[m[1mgit(B[m[38;5;240m pull[30m(B[m[1m (B[m[38;5;240mpull[30m(B[m [38;5;240mpull[30m(B[ms[K[38;5;240mtatus[30m(B[m[36ms[38;5;240mtatus[30m(B[m[36mt[38;5;240matus[30m(B[m[36matus[30m(B[m
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mOn branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   README.md[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.Rproj.user/[m
+	[31mlabs.Rproj[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K[7m^C[30m(B[m[K
+[Acarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [K
+[K[A[43C]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kg[91mg[30m(B[m[38;5;240mit status[9D[30m(B[m[91mi[38;5;240mt status[30m(B[m[91mt[38;5;240m status[30m(B[m[1mgit(B[m[38;5;240m status[30m(B[m[1m (B[m[38;5;240mstatus[30m(B[m [38;5;240mstatus[30m(B[ms[38;5;240mtatus[30m(B[m[36ms[38;5;240mtatus[30m(B[m[36mt[38;5;240matus[30m(B[m[36ma[38;5;240mtus[30m(B[m[36mt[38;5;240mus[30m(B[m[36mu[38;5;240ms[30m(B[m[36ms[30m(B[m
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mOn branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   README.md[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.Rproj.user/[m
+	[31mREADME.html[m
+	[31mlabs.Rproj[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kg[91mg[30m(B[m[38;5;240mit status[9D[30m(B[m[91mi[38;5;240mt status[30m(B[m[91mt[38;5;240m status[30m(B[m[1mgit(B[m[38;5;240m status[30m(B[m[1m (B[m[38;5;240mstatus[30m(B[m [38;5;240mstatus[30m(B[ma[K[38;5;240mdd README.md[12D[30m(B[m[36ma[38;5;240mdd README.md[12D[30m(B[m[36md[38;5;240md README.md[11D[30m(B[m[36md[38;5;240m README.md[10D[30m(B[m[36m [38;5;240mREADME.md[9D[30m(B[m [38;5;240mREADME.md[9D[30m(B[m-[K[36m-[30m(B[m[38;5;240mA[30m(B[m[36m [30m(B[m A[36mA[30m(B[m[KA[36mA[30m(B[m
+[30m(B[m[?2004l]0;git  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[mfatal: pathspec '-' did not match any files
+[?2004h]0;fish  /Users/carter/Documents/School/Fall_2018/Methods I - TA/labs[30m(B[m[38;5;237m⏎(B[m                                                                                             ⏎ [2Kcarter@Carters-MacBook-Pro [32m~/D/S/F/M/labs[30m(B[m> [Kgit add - A[11D[1mgit(B[m [36madd[30m(B[m [36m-[30m(B[m [36mA[30m(B[mA[K[36mA[30m(B[m[C
