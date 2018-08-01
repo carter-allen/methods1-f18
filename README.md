@@ -1,1 +1,9 @@
-# Introduction to Clinical Biostatistics - Fall 2018
+# Methods 1 Lab
+
+## Handouts
+
+## Data
+
+## Exam Reviews
+
+## Slides (past semesters)
