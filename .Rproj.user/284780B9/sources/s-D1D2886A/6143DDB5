@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2924885721",
+    "hash" : "0",
     "id" : "6143DDB5",
-    "lastKnownWriteTime" : 1533137463,
-    "last_content_update" : 1533137463,
+    "lastKnownWriteTime" : 1533137714,
+    "last_content_update" : 1533137714,
     "path" : "~/Documents/School/Fall_2018/Methods I - TA/labs/_config.yml",
     "project_path" : "_config.yml",
     "properties" : {
+        "cursorPosition" : "0,0",
+        "scrollLine" : "0"
     },
     "read_only" : false,
     "read_only_alternatives" : [
