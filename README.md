@@ -3,7 +3,7 @@
 ### Labs
 
 - [Lab 0 - Introductions](l0.html)
-- [Lab 1 - Types of Data, Visualization, Derived Variables](l1.html)
+- [Lab 1 - Types of Data, Visualization, Derived Variables](https://carter-allen.shinyapps.io/lab1/)
 
 ### Data
 

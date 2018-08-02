@@ -1,0 +1,12 @@
+name: lab1
+title: lab1
+username:
+account: carter-allen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 394092
+bundleId: 1515505
+url: https://carter-allen.shinyapps.io/lab1/
+when: 1533247072.9669
+asMultiple: FALSE
+asStatic: FALSE
