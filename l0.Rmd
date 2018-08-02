@@ -23,11 +23,13 @@ library(kableExtra)
 
 ## Introduction to Biostatistics
 
+> "We have the duty of formulating, of summarizing, and of communicating our conclusions, in intelligible form, in recognition of the right of other free minds to utilize them in making their own decisions." - Ronald Fisher
+
 Introduction to Clinical Biostatistics (a.k.a Methods 1) is an introductory course to biostatistics - the field that deals with the application of statistical methods and theories to the life sciences. Biostatistics seeks to formalize and quantify the scientific method by providing tools that allow for _inductive reasoning_. In contrast to _deductive reasoning_, where specific inferences are drawn from a more general theorem, inductive reasoning relies on observations (data) to arrive at more general theorems. With statistics, we can use data to better understand a given process, generate hypotheses regarding that process in general, and test the validity of our hypotheses against what we observed. We will work through this general framework over the course of the semester. 
 
 ## About this Lab Section
 
-The lab section of this course is meant to reinforce the topics learned in the lecture through examples that are relevant to what has been discussed in class. In the lab section, you will gain practice with skills that will be tested on homework and exams. The lab section will not consist of more power point lectures. As your TA, I will work with you on a group and an individual basis to resolve any issues you may have. I will also demonstrate how to use statistical software during labs. While we will make extensive use of statistical software in this class, it is important to remain focused on the concepts being taught. The computational aspect of this class is only a means to an end, which is general statistical reasoning. 
+The lab section of this course is meant to reinforce the topics learned in the lecture through examples that are relevant to what has been discussed in class. In the lab section, you will gain practice with skills that will be tested on homework and exams. The lab section will not consist of any PowerPoint lectures. Instead we will use lab time to work through examples that mimic how your homework is to be done. As your TA, I will work with you on a group and an individual basis to resolve any issues you may have. I will also demonstrate how to use statistical software during labs. While we will make extensive use of statistical software in this class, it is important to remain focused on the concepts being taught. The computational aspect of this class is only a means to an end, which is general statistical reasoning. 
 
 Each week I will generate handouts similar to this one, which will serve as a template for that week's lab. They will be located [here](https://carter-allen.github.io/methods1-f18/). You are encouraged to review these handouts before lab and familiarize yourself with the day's agenda. If you feel that you can work through the labs yourself you are free to complete them from home or not at all. There are no graded lab assignments. The purpose of lab is to aid in your conceptual and practical understanding of the material presented during lecture. With that said, there are still some important ground rules.
 
@@ -35,9 +37,9 @@ Each week I will generate handouts similar to this one, which will serve as a te
 
 - Outside of lab, feel free to email me with questions at allecart@musc.edu. Please be courteous with emails. 
 
-- As a graduate student, you are expected to become proficient in technical writing, the medium in which science is conducted. You will be introduced to a new rhetorical tool in this class, statistics, which is a primary component of most scientific writing. With this in mind, I encourage you to think of this class (and any other statistical situation you encounter) as an exercise in scientific persuasion. You should be drawing on your knowledge of statistical principles to construct a valid and persuasive argument for what you think can is the appropriate inference (if any) to be made from a set of quantitative evidence. 
+- As a graduate student, you are expected to become proficient in technical writing, the medium in which science is conducted. You will be introduced to a new rhetorical tool in this class, statistics, which is a primary component of most scientific writing. With this in mind, I encourage you to think of this class (and any other statistical situation you encounter) as an exercise in scientific persuasion. You should be drawing on your knowledge of statistical principles to construct a valid and persuasive argument for what you think is the appropriate inference (if any) to be made from a set of quantitative evidence. 
 
-- With the above point in mind, all homework assignments should be primarily composed of your interpretations and justifications of the statistical methods used. For any graph, table, figure, or calculation, you must provide an interpretation of what you present. No credit will be given for "naked" computer output.
+- With the above point in mind, all homework assignments should be primarily composed of your interpretations and justifications of the statistical methods used. For any graph, table, figure, or calculation, you must provide an interpretation of what you present. No credit will be given for "raw" or "naked" computer output.
 
 - You are free to consult me, your classmates, or other instructors with questions on homework or the material presented in class. However, each student must submit their own homework. 
 
@@ -65,7 +67,7 @@ ___Data___ are information aggregated in some organized form. Data can consist o
 
 A ___variable___ is some trait or characteristic that we wish to measure. Some examples of variables often encountered in clinical settings are birthweight, age, sex, and blood pressure. An ___observation___ is a set of realizations of variables on a single experimental unit. For example, if we were collecting data on the socio-economic status of a certain community, some variables of interest might be income, race, and education. An observation would be the income, race, and education of one person, where the person is our unit of observation. Again, note that variables need not be numbers. 
 
-The table below shows a classic pedagogical data set, known as `mtcars`. Technical specifications of several (old) cars are related to the cars mpg. In this case, the variables are `mpg`,`cyl`,`disp`, and the rest of the column headers. The observations are the collection of values of these variables associated with each car in the data set. Here, the individual car is the unit of observation. 
+The table below shows a classic pedagogical data set, known as `mtcars`. Technical specifications of several (old) cars are related to the cars' fuel efficiency rating in miles per gallon. In this case, the variables are `mpg`,`cyl`,`disp`, and the rest of the column headers. The observations are the collection of values of these variables associated with each car in the data set. Here, the individual car is the unit of observation. 
 
 ```{r,echo=FALSE}
 data("mtcars")
@@ -82,13 +84,13 @@ This first lab will simply aquatint you with getting data into SPSS and calculat
 
 ### Import data
 
-Locate the `mtcars` data set on the [lab webpage](https://carter-allen.github.io/methods1-f18/). You will be downloading a CSV file called `mtcars.csv`. CSV stands for "comma separated value" and is an indication that each value in the file is delimited by a comma. I encourage you to open `mtcars.csv` in a plain text editor (Notepad on Windows or TextEdit on Mac) to see this for yourself. After downloading this file from the web, place it in a directory on your computer where that makes sense for you. I personally would have a folder for Methods 1 containing a sub-folder for Labs, containing sub-folders for each lab session. 
+Locate the `mtcars` data set on the [lab webpage](https://carter-allen.github.io/methods1-f18/). You will be downloading a CSV file called `mtcars.csv`. CSV stands for "comma separated value" and is an indication that each value in the file is delimited by a comma. I encourage you to open `mtcars.csv` in a plain text editor (Notepad on Windows or TextEdit on Mac) to see this for yourself. After downloading this file from the web, place it in a directory on your computer where that makes sense for you. I personally would have a folder for Methods 1 containing a sub-folder for Labs, containing sub-folders for each lab session, but of course you are free to organize your files for this course however you like.
 
 Now, open SPSS and close any start-up message windows. You should be looking at a blank spreadsheet such as the one shown below. 
 
 ![A blank SPSS screen](blank-spss.jpg)
 
-Now, navigate to __File__ $\rightarrow$ __Import Data__ $\rightarrow$ __CSV Data__. Use the file navigation window to select the `mtcars.csv` file wherever it is located. After accepting the default options, you should now have a spreadsheet populated with the `mtcars` data. 
+Navigate to __File__ $\rightarrow$ __Import Data__ $\rightarrow$ __CSV Data__. Use the file navigation window to select the `mtcars.csv` file wherever it is located on your computer. After accepting the default options, you should now have a spreadsheet populated with the `mtcars` data. 
 
 ![mtcars in SPSS](mtcars-sheet.jpg)
 
@@ -110,7 +112,7 @@ To gather simple descriptive statistics navigate to __Analyze__ $\rightarrow$ __
 
 ![Descriptive statistics menu](mtcars-desc-stats.jpg)
 
-Select each of the three variables by clicking on each and then clicking on the middle arrow to add them to the variables list. Once all three variables are in the list, click on __Options__ and select the desired statistics. Clicking __Continue__ should return the desired table of summary statistics.
+Select each of the three variables by clicking on each and then clicking on the middle arrow to add them to the variables list. Once all three variables are in the list, click on __Options__ and select the desired statistics. Clicking __Continue__ should return the table of summary statistics.
 
 ![Table of descriptive statistics](mtcars-desc-stats-table.jpg)
 
