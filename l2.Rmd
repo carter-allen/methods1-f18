@@ -10,6 +10,8 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(VennDiagram)
+library(tidyverse)
+library(knitr)
 ```
 
 ## Estimating Probabilities - Deduction vs. Induction
@@ -107,4 +109,11 @@ $$mean = \frac{\sum{x_i}}{n} = \frac{number \ of \ times \ event \ happened}{num
 
 ### Faithful data
 
-As an example we'll use the `faithful` data given on the lab webpage ()
+As an example we'll use the `faithful` data given on the lab webpage ([here](https://carter-allen.github.io/methods1-f18/faithful.csv)). This data set gives the duration of eruptions and time until next eruption for the Old Faithful geyser at Yellowstone National Park. After downloading the `faithful.csv` file to your computer, load the data into SPSS as we have been doing for the `mtcars` data. You will use __File__ $\rightarrow$ __Import Data__ $\rightarrow$ __CSV Data__. A preview of the `faithful` data is given below. 
+
+```{r}
+faith <- read.csv("https://carter-allen.github.io/methods1-f18/faithful.csv")
+kable(head(faith),caption = "First few observations of Old Faithful data")
+```
+
+

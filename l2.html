@@ -320,6 +320,9 @@ $(document).ready(function () {
 <li><a href="#multiplication-rule">Multiplication Rule</a></li>
 <li><a href="#independence">Independence</a></li>
 </ul></li>
+<li><a href="#using-spss-to-estimate-probabilities">Using SPSS to estimate probabilities</a><ul>
+<li><a href="#faithful-data">Faithful data</a></li>
+</ul></li>
 </ul>
 </div>
 
@@ -377,7 +380,59 @@ $(document).ready(function () {
 </div>
 <div id="independence" class="section level3">
 <h3>Independence</h3>
-<p>Two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are said to be independent if the occurrence of <span class="math inline">\(A\)</span> has no effect on the probability of <span class="math inline">\(B\)</span> occurring and vice versa. Mathematically, this means that <span class="math inline">\(P(A \cap B) = P(A)P(B)\)</span>. In the cats and dogs example, the event that a student likes cats is not independent from whether or not they like dogs because we calculated <span class="math inline">\(P(cats \ and \ dogs)\)</span> above to be 0.5, while <span class="math inline">\(P(cats)P(dogs) = \frac{13}{20} \times \frac{15}{20} = 0.4875 \ne 0.5\)</span>.</p>
+<p>Two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are said to be independent if the occurrence of <span class="math inline">\(A\)</span> has no effect on the probability of <span class="math inline">\(B\)</span> occurring and vice versa. Mathematically, this means that <span class="math inline">\(P(A \cap B) = P(A)P(B)\)</span>. In the cats and dogs example, the event that a student likes cats is not independent from whether or not they like dogs because we calculated <span class="math inline">\(P(cats \ and \ dogs)\)</span> above to be 0.5, while <span class="math inline">\(P(cats)P(dogs) = \frac{13}{20} \times \frac{15}{20} = 0.4875 \ne 0.5\)</span>. It is certainly possible for two events to be independent but not mutually exclusive (think of the events (i) that your favorite song comes on the radio on your drive home and (ii) it rains on your drive home).</p>
+</div>
+</div>
+<div id="using-spss-to-estimate-probabilities" class="section level2">
+<h2>Using SPSS to estimate probabilities</h2>
+<p>As alluded to earlier, we generally wish to estimate probabilities from a given set of data (via induction). Our general approach to this will be to use software to compute the total number of time the event of interest happens and divide by the total number of times the event could have happened.</p>
+<p>Our approach to this in SPSS will be to define a new variable which will equal 1 if the event did happen and 0 (or missing) otherwise, for each observation. Then the mean of this new variable (made of just 0s and 1s) will be equal to the probability of the event. This is because</p>
+<p><span class="math display">\[mean = \frac{\sum{x_i}}{n} = \frac{number \ of \ times \ event \ happened}{number \ of \ observations}\]</span>.</p>
+<div id="faithful-data" class="section level3">
+<h3>Faithful data</h3>
+<p>As an example we’ll use the <code>faithful</code> data given on the lab webpage (<a href="https://carter-allen.github.io/methods1-f18/faithful.csv">here</a>). This data set gives the duration of eruptions and time until next eruption for the Old Faithful geyser at Yellowstone National Park. After downloading the <code>faithful.csv</code> file to your computer, load the data into SPSS as we have been doing for the <code>mtcars</code> data. You will use <strong>File</strong> <span class="math inline">\(\rightarrow\)</span> <strong>Import Data</strong> <span class="math inline">\(\rightarrow\)</span> <strong>CSV Data</strong>. A preview of the <code>faithful</code> data is given below.</p>
+<table>
+<caption>First few observations of Old Faithful data</caption>
+<thead>
+<tr class="header">
+<th align="right">id</th>
+<th align="right">eruptions</th>
+<th align="right">waiting</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">1</td>
+<td align="right">3.600</td>
+<td align="right">79</td>
+</tr>
+<tr class="even">
+<td align="right">2</td>
+<td align="right">1.800</td>
+<td align="right">54</td>
+</tr>
+<tr class="odd">
+<td align="right">3</td>
+<td align="right">3.333</td>
+<td align="right">74</td>
+</tr>
+<tr class="even">
+<td align="right">4</td>
+<td align="right">2.283</td>
+<td align="right">62</td>
+</tr>
+<tr class="odd">
+<td align="right">5</td>
+<td align="right">4.533</td>
+<td align="right">85</td>
+</tr>
+<tr class="even">
+<td align="right">6</td>
+<td align="right">2.883</td>
+<td align="right">55</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 
