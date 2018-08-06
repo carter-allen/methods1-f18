@@ -4,6 +4,7 @@
 
 - [Lab 0 - Introductions](l0.html)
 - [Lab 1 - Types of Data, Visualization, Derived Variables](https://carter-allen.shinyapps.io/lab1/)
+- [Lab 2 - Basics of Probability](l2.html)
 
 ### Data
 

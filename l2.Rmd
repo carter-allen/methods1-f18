@@ -7,11 +7,12 @@ output:
     toc: true
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE,fig.pos="center"}
 knitr::opts_chunk$set(echo = FALSE)
 library(VennDiagram)
 library(tidyverse)
 library(knitr)
+library(kableExtra)
 ```
 
 ## Estimating Probabilities - Deduction vs. Induction
@@ -109,11 +110,58 @@ $$mean = \frac{\sum{x_i}}{n} = \frac{number \ of \ times \ event \ happened}{num
 
 ### Faithful data
 
-As an example we'll use the `faithful` data given on the lab webpage ([here](https://carter-allen.github.io/methods1-f18/faithful.csv)). This data set gives the duration of eruptions and time until next eruption for the Old Faithful geyser at Yellowstone National Park. After downloading the `faithful.csv` file to your computer, load the data into SPSS as we have been doing for the `mtcars` data. You will use __File__ $\rightarrow$ __Import Data__ $\rightarrow$ __CSV Data__. A preview of the `faithful` data is given below. 
+As an example we'll use the `faithful` data given on the lab webpage ([here](https://carter-allen.github.io/methods1-f18/faithful.csv)). This data set gives the duration of eruptions (in mins) and time until next eruption (in mins) for the Old Faithful geyser at Yellowstone National Park. After downloading the `faithful.csv` file to your computer, load the data into SPSS as we have been doing for the `mtcars` data. You will use __File__ $\rightarrow$ __Import Data__ $\rightarrow$ __CSV Data__. A preview of the `faithful` data is given below. 
 
 ```{r}
 faith <- read.csv("https://carter-allen.github.io/methods1-f18/faithful.csv")
-kable(head(faith),caption = "First few observations of Old Faithful data")
+kable(head(faith),caption = "First few observations of Old Faithful data") %>% kable_styling(bootstrap_options = c("stripped","hover"))
 ```
 
+Lets calculate the probability a given eruption lasted more than 4.5 mins (maybe this is the cutoff for an eruption to be considered "long"). To do this, we will define a new variable in SPSS called `long` which will equal 1 if the eruption time for that observation was greater than 4.5. Otherwise the value of `long` will just be empty. To do this, go to __Transform__ $\rightarrow$ __Compute Variable__. In the top left, enter a name for this new indicator variable. You can name it anything, but here we will call it `long`. In the "Numeric Expression" box, simply enter 1, as this will be the new value of `long`. We still need to tell SPSS which observations to make 1 and which to leave empty. To do this, click the "If..." button at the bottom of the window. This will allow you to make `long` = 1 on a case by case basis, and we want to tell SPSS to only make it 1 when `eruption` > 4.5. Highlight the `eruption` variable and move it to the top box using the right arrow. Now select the option for "Include if case satisfies condition" and enter `eruption > 4.5`. Your window should look like this. 
 
+```{r,out.width="50%",fig.cap="Conditional logic for indicator variable"}
+include_graphics("long-if.jpg")
+```
+
+Clicking OK should bring you back to the Compute Variable window, which should look like this. 
+
+```{r,out.width="50%",fig.cap="Compute variable screen"}
+include_graphics("comp-long.jpg")
+```
+
+Once your variable is defined, we'll use the descriptive statistics option to find the probability of an eruption longer than 4.5 mins. Go to __Analyze__ $\rightarrow$ __Descriptive Statistics__ $\rightarrow$ __Frequencies__ and move the `long` variable you just created into the box. Click OK and you should be given this table. 
+
+```{r,out.width="50%",fig.cap="Frequency table for indicator variable"}
+include_graphics("long-tbl.jpg")
+```
+
+The frequency of 1s (indicating the cases where eruption > 4.5) is 57 and the total sample size is 272, so the probability that an eruption is greater longer 4.5 mins is $57/272 \approx 0.21$.
+
+As a slightly more complex example, lets calculate the probability that either the eruption was longer than 4.5 mins, or the time until the next eruption was less than an hour (or both). We will use the same approach as before. Go to __Transform__ $\rightarrow$ __Compute Variable__. In the "Target Variable" box, give your variable some name. Then, enter 1 in the box for "Numeric Expression". To specify the conditional logic, click the "If..." button. Make sure the button for "Include if case satisfies condition" is selected. In the box below, enter `eruptions > 4.5 | waiting < 60`. Note that the `|` symbol represents "or" (also `&` represents "and"). Your window should look like this. 
+
+```{r,out.width="50%",fig.cap="Conditional logic for indicator variable"}
+include_graphics("comp2.jpg")
+```
+
+Clicking OK will bring you back to the compute variable screen which should look like this.
+
+```{r,out.width="50%",fig.cap="Compute variable screen"}
+include_graphics("comp3.jpg")
+```
+
+As before, we will use frequency statistics to estimate the probability of interest. Go to  __Analyze__ $\rightarrow$ __Descriptive Statistics__ $\rightarrow$ __Frequencies__ and move the new variable into the box. Clicking OK should give this table, from which we can see that the probability of an eruption longer than 4.5 mins or a waiting time of less than 1 hr or both is about 0.49.  
+
+```{r,out.width="50%",fig.cap="Frequency table for indicator variable"}
+include_graphics("v2-freqs.jpg")
+```
+
+## Lab
+
+Use the `faithful` data to calculate the following probabilities. 
+
+- Probability of a waiting time over an hour. 
+- Probability of an eruption less than 2 mins. 
+- Probability of both an erruption less than two mins and a waiting time of over an hour. 
+- Probability of either an erruption time of less than 2 mins or a waiting time of over an hour. 
+
+Could we consider the having an eruption time less than 2 mins and a waiting time of over an hour to be independent?
