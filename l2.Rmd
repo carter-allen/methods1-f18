@@ -1,0 +1,110 @@
+---
+title: "Lab 2 - Probabilities"
+author: "Carter Allen"
+date: "8/2/2018"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(VennDiagram)
+```
+
+## Estimating Probabilities - Deduction vs. Induction
+
+In any introductory statistics class, you will be taught the fundamental rules for calculating probabilities. Usually, the simple example of flipping a coin in presented somewhere along the way, where we reason that if a coin is fair, the probability that it comes up heads on any given flip should be 0.5. In a clinical setting, you might also want to estimate the probability that any given birth at MUSC will be considered low birthweight based on the birth records at MUSC over the past year. In both examples we are presenting the probability of an event, but there is a fundamental difference in how we arrive at these probabilities in each example. In fact, these two examples provide an illustration of where the field of statistics branches off from probability, a sub-field of pure mathematics. 
+
+When we reported that the probability a fair coin results in a head on any given flip, we relied on ___deduction___ - the process of applying a general theorem to arrive at answers for specific cases. In this case, the general theorem could be thought of as something like "If two exhaustive events are independent and equally likely, than the probability of each must be 0.5." This theorem could be proved by noting that any set of independent (the probability of one event does not affect the probability of another event) and exhaustive (the set of events makes up all possible outcomes) events must have probabilities that add to 1, and since each of the two events are equally likely, the probability of flipping tails must equal the probability of flipping heads, which must equal 0.5. Note that we did not rely on any data to calculate this probability. 
+
+When estimating the probability that a given baby born at MUSC is low birthweight, it would be impossible to arrive at the answer via deduction. That would require us to identify and quantify every single factor that causes a baby to be low birthweight, of which there are probably thousands! For more complex situations like this, we must rely on ___induction___ - the process of estimating quantities that we can never observe directly based on the evidence from observations we can make. In this case, we can certainly record the number of low birthweight babies born at MUSC in a given year and use that to estimate the general probability of a low birthweight birth taking place at MUSC. 
+
+You can think of deduction as a "top down" approach, while induction is a "bottom up" approach. In this class, you will mostly be using induction to estimate probabilities. 
+
+## Probability Rules
+
+### Definition and Notations
+
+A probability is a continuous measure between 0 and 1 (inclusive). A probability of 0 means that event can never happen, while a probability of 1 means that event must happen. The higher the probability, the more likely the event. In general, there are some basic rules we can use to calculate probabilities in most situations. The definition of a probability is given below.
+
+$$P(E) = \frac{|E|}{|S|}$$
+
+In this definition, $E$ is some arbitrary ___event___ (coin flip was a head, baby was low birthweight, my alarm clock failed this morning etc...), and $S$ is the ___sample space___ - the collection of events that make up all possible outcomes. For coin flips, $S = \{heads,tails\}$. For birthweights, $S = \{low \ birthweight, not \ low \ birthweight\}$. The $|E|$ notations denotes the number of ways $E$ can happen. So, a probability is defined as a ratio of the number of ways the event can happen divided by the total number of things that could have happened. 
+
+A list of notation commonly used to express probabilities is given below.
+
+- $|A|$: "The number of ways event A can happen"
+- $P(A)$: "The probability of event A happening"
+- $P(A^c)$ or $P(\bar{A})$: "The probability of A not happening" 
+- $P(A|B)$: "The probability of event A happening given we know that event B already happened"
+- $P(A \cap B)$: "The probability that event A and event B both happen"
+- $P(A \cup B)$: "The probability that either event A, event B, or both happen"
+
+### Visual Representation of Probability
+
+We can use different graphical techniques to visually represent probabilities. One of the most common methods is to draw figures where the probability of an even is proportional to some shaded area. The Venn Diagram is useful for making such graphics. With a Venn Diagram, circles are drawn for each possible event, where the area of the circle is larger for events that are more likely. For example, if we were to poll the class to ask whether they prefer morning classes and afternoon classes, and out of 20 people 15 prefer morning, a Venn Diagram to represent the probabilities of each preference might look like this. 
+
+```{r, warning=FALSE,message=FALSE}
+grid.newpage()
+d <- draw.pairwise.venn(area1 = 15, area2 = 5, cross.area = 0, category = c("Morning People", 
+    "Afternoon People"), lty = rep("blank", 2), fill = c("light blue", "green"), 
+    alpha = rep(0.5, 2), cat.pos = c(0, 180), euler.d = TRUE, sep.dist = 0.03, 
+    rotation.degree = 45)
+```
+
+### Mutual Exclusivity 
+
+Two events are said to be ___mutually exclusive___ if they cannot both occur simultaneously. Equivalently, two events $A$ and $B$ are mutually exclusive if $P(A \cap B) = 0$, which reads "the probability of both A and B occurring is 0." The Venn Diagram above presents an example of two mutually exclusive events, because there are no individuals who are both morning people and afternoon people. 
+
+### Addition Rule
+
+For two events $A$ and $B$, the addition rule gives us a way to calculate the probability of $A$ or $B$ or both. The equation is given below, but in words, the addition rule states that the probability of $A$ or $B$ or both is equal to the probability of $A$ plus the probability of $B$ minus the probability of $A \cap B$ (read $A$ and $B$).
+
+$$P(A \cup B) = P(A) + P(B) - P(A \cap B)$$
+
+You might be wondering why we subtract off $P(A \cap B)$ if we are interested in the probability of $A$ or $B$ or both. This is because when adding $P(A)$ and $P(B)$ we are double counting the intersection and thus need to subtract it off once to correct for this. 
+
+Say we asked each person in the class of 20 if they like dogs, cats, or both. The Venn Diagram for these responses might look like the following, where 15 people like dogs, 13 people like cats, and 10 people like both. 
+
+```{r, warning=FALSE,message=FALSE}
+grid.newpage()
+d <- draw.pairwise.venn(area1 = 15, area2 = 13, cross.area = 10, category = c("Dog People", 
+    "Cat People"), lty = rep("blank", 2), fill = c("light blue", "green"), 
+    alpha = rep(0.5, 2), cat.pos = c(320,45), euler.d = TRUE, sep.dist = 0.03, 
+    rotation.degree = 45)
+```
+
+You can see that if we add up everyone who likes dogs (5 + 10) and everyone who likes cats (3 + 10), we get 5 + 10 + 3 + 10 = 28 people, which makes no sense in a class of 20! This is because we double counted the middle section. So to correctly calculate $P(likes \ cats \ or \ dogs)$ we need to use the addition rule. 
+
+$$P(likes \ cats \ or \ dogs) = P(likes \ cats) + P(likes \ dogs) - P(likes \ cats \ and \ dogs)$$
+
+$$ = \frac{15}{20} + \frac{13}{20} - \frac{10}{20} = \frac{18}{20}$$
+
+### Multiplication Rule
+
+The multiplication rule allows us to calculate $P(A \cap B)$, the probability of both A and B. To find the probability of A and B, we multiply the probability of one of the events by the probability of the other event given the first event already occurred. The equation for this is given below. 
+
+$$P(A \cap B) = P(A)P(B|A) = P(B)P(A|B)$$
+
+In the Venn Diagram for the number of people who like dogs or cats in the class, the probability someone likes both dogs and cats is
+
+$$P(cats \ and \ dogs) = P(dogs)P(cats|dogs) = (\frac{15}{20})(\frac{10}{15}) = \frac{10}{20}$$
+
+We could have also computed this probability directly by noting from the Venn Diagram that 10 of 20 people like dogs and cats. 
+
+### Independence
+
+Two events $A$ and $B$ are said to be independent if the occurrence of $A$ has no effect on the probability of $B$ occurring and vice versa. Mathematically, this means that $P(A \cap B) = P(A)P(B)$. In the cats and dogs example, the event that a student likes cats is not independent from whether or not they like dogs because we calculated $P(cats \ and \ dogs)$ above to be 0.5, while $P(cats)P(dogs) = \frac{13}{20} \times \frac{15}{20} = 0.4875 \ne 0.5$. It is certainly possible for two events to be independent but not mutually exclusive (think of the events (i) that your favorite song comes on the radio on your drive home and (ii) it rains on your drive home).
+
+## Using SPSS to estimate probabilities
+
+As alluded to earlier, we generally wish to estimate probabilities from a given set of data (via induction). Our general approach to this will be to use software to compute the total number of time the event of interest happens and divide by the total number of times the event could have happened. 
+
+Our approach to this in SPSS will be to define a new variable which will equal 1 if the event did happen and 0 (or missing) otherwise, for each observation. Then the mean of this new variable (made of just 0s and 1s) will be equal to the probability of the event. This is because
+
+$$mean = \frac{\sum{x_i}}{n} = \frac{number \ of \ times \ event \ happened}{number \ of \ observations}$$. 
+
+### Faithful data
+
+As an example we'll use the `faithful` data given on the lab webpage ()

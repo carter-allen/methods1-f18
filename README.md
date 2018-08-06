@@ -8,6 +8,7 @@
 ### Data
 
 - [mtcars](mtcars.csv)
+- [faithful](faithful.csv)
 
 ### Exam Reviews
 
