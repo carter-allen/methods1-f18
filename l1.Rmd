@@ -2,7 +2,6 @@
 title: "Lab 1 - Types of Data"
 author: "Carter Allen"
 date: "8/2/2018"
-runtime: shiny
 output: 
   html_document:
     toc: true
@@ -77,25 +76,7 @@ Before getting into the best practices for data visualization, let's first look 
 
 In this class, we will most often be visualizing numeric data, both continuous and discrete. Below are two commonly used graphics for displaying numeric data.
 
-1) The ___histogram___ is used to plot one continuous numeric variable. The histogram breaks up the total range of the variable into distinct bins, where the bins are placed along the x axis. Then, the frequency or count of the number of observations falling into each bin is plotted on the y axis. As the number of bins increases (i.e. the width of each bin decreases), the histogram begins to approximate the ___density curve___, which is a "smoothed" histogram plotted continuously. Shown below is a histogram with its corresponding density curve plotted for a large sample from a continuous numeric random variable. Try increasing the number of bins in the input box and watch how the histogram begins to estimate the density curve. 
-
-```{r}
-shinyApp(
-
-  ui = fluidPage(
-    numericInput("bins","Number of Bins",10,min = 0,max = 1000),
-    plotOutput("hist")
-  ),
-
-  server = function(input, output) {
-    output$hist = renderPlot({
-      X = rnorm(10000)
-      ggplot2::ggplot() + geom_histogram(aes(x = X, y = ..density..),bins = as.numeric(input$bins)) + xlab("Continuous numeric random variable") + scale_x_continuous(limits = c(-5,5)) + geom_line(aes(x = X,y = ..density..), color = "cadetblue",stat = 'density') 
-    })
-  },
-  options = list(height = 500)
-)
-```
+1) The ___histogram___ is used to plot one continuous numeric variable. The histogram breaks up the total range of the variable into distinct bins, where the bins are placed along the x axis. Then, the frequency or count of the number of observations falling into each bin is plotted on the y axis. As the number of bins increases (i.e. the width of each bin decreases), the histogram begins to approximate the ___density curve___, which is a "smoothed" histogram plotted continuously. Shown [here](https://carter-allen.shinyapps.io/hist_dens/) is a histogram with its corresponding density curve plotted for a large sample from a continuous numeric random variable. Try increasing the number of bins in the input box and watch how the histogram begins to estimate the density curve. 
 
 2) The ___bar chart___ is used to plot one discrete numeric variable. Similarly to the histogram, the unique values are plotted on the x-axis and the corresponding counts or frequencies of the discrete variable are plotted on the y-axis. Note that with bar charts we don't need to worry about bins, because the data are already discrete. Below is bar chart showing for the `cyl` variable (number of engine cylinders) in the `mtcars` data.
 

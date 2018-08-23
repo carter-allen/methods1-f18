@@ -1,0 +1,12 @@
+name: hist_dens
+title: hist_dens
+username:
+account: carter-allen
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 406243
+bundleId: 1550651
+url: https://carter-allen.shinyapps.io/hist_dens/
+when: 1535032538.88182
+asMultiple: FALSE
+asStatic: FALSE
