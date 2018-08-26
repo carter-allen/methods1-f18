@@ -14,3 +14,7 @@
 ### Exam Reviews
 
 ### Slides (past semesters)
+
+- [Lab 1](Lecture 1 Slides.pptx)
+- [Lab 2](Lecture 2 Slides.pptx)
+- [Lab 3](Lecture 3 Slides.pptx)
