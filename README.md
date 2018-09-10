@@ -5,6 +5,7 @@
 - [Lab 0 - Introductions](l0.html)
 - [Lab 1 - Types of Data, Visualization, Derived Variables](l1.html)
 - [Lab 2 - Basics of Probability](l2.html)
+- [Lab 3 - Random Variables and Probability Distributions](l3.html)
 
 ### Data
 
@@ -18,3 +19,4 @@
 - [Lab 1](Lecture 1 Slides.pptx)
 - [Lab 2](Lecture 2 Slides.pptx)
 - [Lab 3](Lecture 3 Slides.pptx)
+- [Lab 4](Lecture 4 Slides.pptm)

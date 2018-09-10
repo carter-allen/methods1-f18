@@ -1,0 +1,101 @@
+---
+title: "Random Variables and Probability Distributions"
+author: "Carter Allen"
+date: "9/9/2018"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE,fig.pos="center"}
+knitr::opts_chunk$set(echo = FALSE)
+library(VennDiagram)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+
+## Probability Distributions
+
+Until now, we have been describing our the variables in a data set using sample statistics, including measures of center, measures of spread, and estimated probabilities. However, we can often achieve more flexible and informative information about the variables in our data by modeling them with a ___probability distribution___, or a mathematical function of the sample space the returns probabilities of events under the model. Two common ways to define a probability distribution are with a ___probability density (or mass) function___ and a ___cumulative distribution function___. 
+
+- ___probability density (or mass) functions___ are often denoted $f(x)$ or $P(x)$. Just like any mathematical function, they take in an input and return a (unique) output. Here, the input is a value of a random variable, and the output is the probability that the random variable equals that value. We use the term _density_ for continuous random variables and _mass_ for discrete random variables. 
+
+- ___cumulative distribution functions___ are denoted $F(x)$ or $P(X \le x)$. The cumulative distribution function takes as an input a particular value of a random variable and returns the probability that the random variable is less than or equal to the given value. 
+
+Below are some common probability distributions used to model random variables. 
+
+### Uniform Distribution
+
+The uniform distribution assigns equal probability to all possible values. A uniform distribution can be either discrete or continuous and are defined by a minimum and maximum possible value. 
+
+```{r}
+x <- seq(1,10,by = 1)
+p.x <- dunif(x,min = 0, max = 10)
+df <- as.data.frame(cbind(x,p.x))
+ggplot(data = df, aes(x = x,y = p.x)) + geom_col() + scale_x_continuous(breaks = x) + ggtitle("Discrete Uniform Probability Density Function")
+```
+
+### Bernoulli Distribution
+
+The Bernoulli distribution is used to model a random variable that can take on one of two values, arbitrarily labeled "success" or "failure." Numerically, a success is labeled with a 1 and a failure is labeled with a zero. A Bernoulli distribution is defined by the parameter $p$, the probabilty of success. 
+
+### Binomial Distribution
+
+A binomial random variable is the sum of $n$ Bernoulli random variables. In other words, a binomial random variable indicates the number of successes in $n$ independent Bernoilli trials. A binomial distribution is characterized by $n$ and $p$, where $p$ is the probability of success on each of the $n$ trials. 
+
+```{r}
+x <- seq(0,10,by = 1)
+p.x <- dbinom(x,10,prob = 0.25)
+df <- as.data.frame(cbind(x,p.x))
+ggplot(data = df, aes(x = x,y = p.x)) + geom_col() + scale_x_continuous(breaks = x) + ggtitle("Binomial Probability Density Function") + labs(subtitle = "p = 0.25")
+```
+
+
+### Normal Distribution 
+
+The normal distribution is a continuous distribution that ranges from $-\infty$ to $\infty$, with a bell curve shape centered on the mean. A normal random variable is characterized by its mean $\mu$ and variance $\sigma^2$.
+
+```{r}
+x <- seq(-10,10,by = 0.01)
+p.x <- dnorm(x,mean = 0, sd = 2)
+df <- as.data.frame(cbind(x,p.x))
+ggplot(data = df, aes(x = x, y = p.x)) + geom_line() + ggtitle("Normal Probability Density Function") + labs(subtitle = "Mean = 0 and stdev = 2")
+```
+
+
+### Poisson Distribution
+
+The Poisson distribution is used to model "count" data, as a Poisson random variable denotes the number of occurences of an even over a specific time period. A Poisson random variable is indexed by the parameter $\lambda$, or the rate of event occurences over a defined time period. 
+
+```{r}
+x <- seq(0,10,by = 1)
+p.x <- dpois(x,lambda = 4)
+df <- as.data.frame(cbind(x,p.x))
+ggplot(data = df, aes(x = x,y = p.x)) + geom_col() + scale_x_continuous(breaks = x) + ggtitle("Poisson Probability Density Function") + labs(subtitle = "lambda = 4")
+```
+
+## Probability Distributions in SPSS
+
+In SPSS, we can calculate probabilities of these distributions. The general approach to doing this will be to compute new variables using either the density (mass) function or cumulative distribution function of the distribution we are working with. 
+
+For example, say we have a binomial random variable $X$, where the number of trials $n = 10$, and $p = 0.25$. In this case, $X$ can take on values $0,1,...,10$, with a probability associated with each of these events. In SPSS we can calculate $P(X = x)$ and $P(X \le x)$ for $x = 0,1,2,...,10$.
+
+1) Open a blank SPSS data set. 
+
+2) Enter the values $0,1,...,10$ in a column and name the column `x`.
+
+3) Navigate to __Transform__ $\rightarrow$ __Compute Variable__. Name the target variable `p.x` and find the `Pdf.Binom` function under the function group menu. 
+
+4) Move the variable `x` into the `quant` argument in the `Pdf.Binom` function. Let `n` = 10 and `prop` = 0.25. Click OK and you should now have a column populated with $P(X = x)$ for $x = 0,1,2,...,10$. 
+
+
+## Lab
+
+- Using the same binomial distribution as above, calculate a new variable `cdf.x`, where you use the the `Cdf.Binom` function instead of the `Pdf.Binom` function. 
+
+- Make appropriate graphical displays for the binomial pdf and cdf functions. 
+
+- Use these plots to estimate (i) $P(X = 2)$, (ii) $P(X > 2)$, (iii) $P(X \ge 2)$.
+
+- For a normal random variable $X$ with mean $\mu = 5$ and standard deviation $\sigma = 5$, calculate the following probabilities: (i) $P(X < 5)$, (ii) $P(X > 15)$, (iii) $P(5 < X < 15)$. 
