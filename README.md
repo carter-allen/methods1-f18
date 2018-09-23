@@ -14,6 +14,9 @@
 
 ### Exam Reviews
 
+- [Exam 1 Review](Methods 1 Exam 1 Review)
+- [Exam 1 Review (with solutions)](Methods 1 Exam 1 Review Solutions)
+
 ### Slides (past semesters)
 
 - [Lab 1](Lecture 1 Slides.pptx)
