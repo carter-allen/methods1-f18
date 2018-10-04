@@ -1,0 +1,62 @@
+---
+title: "Interval Estimation"
+author: "Carter Allen"
+date: "10/2/2018"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE,fig.pos="center"}
+knitr::opts_chunk$set(echo = FALSE)
+library(VennDiagram)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(patchwork)
+```
+
+## Sampling Distributions
+
+Fundamental to the idea of interval estimation is the sampling distribution of a statistic. As you have learned, a statistic (remember the term statistic is simply defined as a mathematical function of data) computed from data arising from a given distribution has its own distribution. The probability distribution of a statistic is called a _sampling distribution_. We have learned a few important theorems that inform us of the sampling distribution of common statistics. 
+
+___Theorem 1___: Let $X_1, X_2, ..., X_n$ be a sample of size $n$ from a Normal population with mean $\mu$ and variance $\sigma^2$. Assume $\sigma^2$ is known. Define $\bar{X} = \frac{\sum_{i = 1}^n X_i}{n}$ as the sample mean of the $n$ observations. The sampling distribution of $\bar{X}$ is as follows. 
+
+$$\bar{X} \sim N(\mu, \frac{\sigma^2}{n})$$
+
+```{r, echo = FALSE, fig.cap="Distribution of X (left) and distribution of the mean of a sample of size n = 5 drawn from the distribution of X", fig.width=15}
+x = seq(-4,4,by = 0.01)
+y = dnorm(x)
+ybar = dnorm(x,0,1/5)
+p1 <- ggplot() + geom_line(aes(x = x, y = y)) + xlab("x") + ylab("f(x)")
+p2 <- ggplot() + geom_line(aes(x = x, y = ybar)) + xlab("x_bar") + ylab("f(x_bar)")
+p1 + p2
+```
+
+___Theorem 2___: Let $X_1, X_2, ..., X_n$ be a sample of size $n$ from a Normal population with mean $\mu$ and variance $\sigma^2$. Assume $\sigma^2$ is unknown. Define $\bar{X} = \frac{\sum_{i = 1}^n X_i}{n}$ as the sample mean of the $n$ observations, and $S^2 = \frac{\sum_{i = 1}^n (X_i-\bar{X})^2}{n-1}$ as the unbiased estimate of the true population variance. The sampling distribution of $\bar{X}$ is as follows.
+
+$$\frac{\bar{X}-\mu}{S/\sqrt{n}} \sim t_{df = n-1}$$
+
+___Theorem 3___: Let $X_1, X_2, ..., X_n$ be independent random variables identically distributed as Bernoulli with probability of "success" $p$. The quantity $\sum_{i = 1}^{n} X_i \sim Binomial(n,p)$. Define the sample proportion $\hat{p} = \frac{\sum_{i = 1}^{n} X_i}{n}$, a linear transformation of $\sum_{i = 1}^{n} X_i$. We have the following approximate distribution of $\hat{p}$ for large $n$. 
+
+$$\hat{p} \stackrel{approx}{\sim} N(p,\frac{p(1-p)}{n})$$
+
+___Theorem 4___: Let $X_1, X_2, ..., X_n$ be a sample of size $n$ from a Normal population with mean $\mu$ and variance $\sigma^2$. The statistic $\frac{1}{\sigma^2}\sum_{i = 1}^n(X_i - \mu)^2 \sim \chi^2_{df = n}$. When substituting in $\bar{X}$ for $\mu$, a degree of freedom is lost. Stated another way, 
+
+$$\frac{(n-1)s^2}{\sigma^2} \sim \chi^2_{n-1}$$
+
+```{r, fig.cap="Density function of a chi-square random variable with 10 degrees of freedom",fig.width=15}
+x <- seq(0,30,by = 0.1)
+f.x <- dchisq(x,10)
+ggplot() + geom_line(aes(x = x, y = f.x))
+```
+
+
+## Confidence Intervals
+
+A confidence interval is a set of points defined by a lower bound and an upper bound that are theoretically expected to contain a parameter of interest $(1-\alpha)\times 100 \%$ of the time when the experiment is repeated. The theory behind confidence intervals is valid only when the data are collected according to the models assumed. The general form of a confidence interval is 
+
+$$point \ estimate \ \pm \ (critical \ value)(standard \ error)$$
+
+From the theorems above, this general form for a confidence interval can be adapted to specific situations. 
