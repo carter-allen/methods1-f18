@@ -25,5 +25,5 @@
 - [Lab 3](Lecture 3 Slides.pptx)
 - [Lab 4](Lecture 4 Slides.pptm)
 - [Lab 5](Lecture 5 Slides.pptx)
-- [Lab 6](Lecture 6 Slides.pptx)
-- [Lab 7](Lecture 7 Slides.pptx)
+- [Lab 6](Lecture 6 slides.pptx)
+- [Lab 7](Lecture 7 slides.pptx)
