@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 When data are collected from a single population, we can test if the mean of the population is equal to a certain hypothesized value. We will make use of the same facts we used for confidence intervals to test hypotheses about means. 
 
-Let $X_1,X_2,...,X_n$ be a random sample of size $n$ from a population with mean $\mu$ and variance $\sigma^$. From our sample, we calculate $\bar{X} = \frac{\sum x_i}{n}$ and $s^2 = \frac{\sum (x_i - \bar{x})^2}{n-1}$ and use them to estimate $\mu$ and $\sigma^2$, respectively. We know that
+Let $X_1,X_2,...,X_n$ be a random sample of size $n$ from a population with mean $\mu$ and variance $\sigma^2$. From our sample, we calculate $\bar{X} = \frac{\sum x_i}{n}$ and $s^2 = \frac{\sum (x_i - \bar{x})^2}{n-1}$ and use them to estimate $\mu$ and $\sigma^2$, respectively. We know that
 
 $$Z = \frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \sim N(0,1)$$
 
@@ -21,3 +21,10 @@ $$t = \frac{\bar{X}-\mu}{s/\sqrt{n}} \sim t_{df = n-1}$$
 
 We define a set of hypotheses $H_0: \mu = \mu_0$ and $H_A: \mu \ne \mu_0$, and compute a $Z$ or $t$ test statistic depending on whether or not we know $\sigma^2$. If this test statistic results in an extreme value under the assumpion of $H_0$ then we reject $H_0$ in favor of $H_A$.
 
+### Example in SPSS
+
+Use the [data](https://carter-allen.github.io/methods1-f18/one-population.csv) on the course webpage titled `one-population.csv`. This file contains data collected on the blood pressure of a certain population. Say we wish to test the following hypotheses.
+
+$$H_0: \mu = 120$$
+
+$$H_A: \mu \ne 120$$
