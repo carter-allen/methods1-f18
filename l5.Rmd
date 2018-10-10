@@ -1,0 +1,14 @@
+---
+title: "Lab 5 - Tests About Population Means"
+author: "Carter Allen"
+date: "10/10/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Tests for One Population
+
+When data are collected from a single population, we can test if the mean of the population is equal to a certain value 
