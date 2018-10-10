@@ -11,4 +11,13 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Tests for One Population
 
-When data are collected from a single population, we can test if the mean of the population is equal to a certain value 
+When data are collected from a single population, we can test if the mean of the population is equal to a certain hypothesized value. We will make use of the same facts we used for confidence intervals to test hypotheses about means. 
+
+Let $X_1,X_2,...,X_n$ be a random sample of size $n$ from a population with mean $\mu$ and variance $\sigma^$. From our sample, we calculate $\bar{X} = \frac{\sum x_i}{n}$ and $s^2 = \frac{\sum (x_i - \bar{x})^2}{n-1}$ and use them to estimate $\mu$ and $\sigma^2$, respectively. We know that
+
+$$Z = \frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \sim N(0,1)$$
+
+$$t = \frac{\bar{X}-\mu}{s/\sqrt{n}} \sim t_{df = n-1}$$
+
+We define a set of hypotheses $H_0: \mu = \mu_0$ and $H_A: \mu \ne \mu_0$, and compute a $Z$ or $t$ test statistic depending on whether or not we know $\sigma^2$. If this test statistic results in an extreme value under the assumpion of $H_0$ then we reject $H_0$ in favor of $H_A$.
+
