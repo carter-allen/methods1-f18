@@ -12,6 +12,8 @@
 
 - [mtcars](mtcars.csv)
 - [faithful](faithful.csv)
+- [pre-post blood pressure](pre-post_example.csv)
+- [one population blood pressure](one-population.csv)
 
 ### Exam Reviews
 
