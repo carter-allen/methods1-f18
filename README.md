@@ -8,6 +8,7 @@
 - [Lab 3 - Random Variables and Probability Distributions](l3.html)
 - [Lab 4 - Sampling Distributions and Interval Estimation](l4.html)
 - [Lab 5 - Hypothesis Testing for One Population](l5.html)
+- [Lab 6 - Comparing Populations & Non-parametrics](l6.html)
 
 ### Data
 
