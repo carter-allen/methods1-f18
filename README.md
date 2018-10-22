@@ -21,6 +21,9 @@
 
 - [Exam 1 Review](Methods 1 Exam 1 Review.docx)
 - [Exam 1 Review (with solutions)](Methods 1 Exam 1 Review Solutions.docx)
+- [Exam 2 Review](Methods 1 Exam 2 Review.docx)
+- [Exam 2 Review (with solutions)](Methods 1 Exam 2 Review Answer Key.docx)
+
 
 ### Slides (past semesters)
 
