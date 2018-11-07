@@ -9,6 +9,7 @@
 - [Lab 4 - Sampling Distributions and Interval Estimation](l4.html)
 - [Lab 5 - Hypothesis Testing for One Population](l5.html)
 - [Lab 6 - Comparing Populations & Non-parametrics](l6.html)
+- [Lab 7 - Contingency Tables](l7.html)
 
 ### Data
 

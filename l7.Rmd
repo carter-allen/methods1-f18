@@ -1,0 +1,168 @@
+---
+title: "Lab 7 - Contingency Tables"
+author: "Carter Allen"
+date: "11/6/2018"
+output: 
+  html_document:
+    toc: true
+---
+
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(patchwork)
+```
+
+## Contingency Tables
+
+A contingency table is used to show the relationship between (usually) two categorical variables. Each categorical variable in the table has (usually) two levels, but there can certainly be more. In a $2 \times 2$ contingency table, we refer to the cell counts with $a,b,c,d$ as follows.
+
+```{r}
+r1 <- c("a","b","a+b")
+r2 <- c("c","d","c+d")
+r3 <- c("a+c","b+d","a+b+c+d")
+tbl <- rbind(r1,r2,r3)
+colnames(tbl) <- c("A+","A-","Total")
+rownames(tbl) <- c("B+","B-","Total")
+kable(as.data.frame(tbl),caption = "Observed counts") %>% kable_styling()
+```
+
+To create a $2 \times 2$ table in SPSS:
+
+1) ___Analyze___ $\rightarrow$ ___Descriptive Statistics___ $\rightarrow$ ___Crosstabs___ $\rightarrow$. 
+2) Add the desired row variable to the Row(s) box and the desired column variable to the Column(s) box. 
+3) Click OK. 
+
+### Weights
+
+If the raw data are not given to you in the form of columns with 0's and 1's, but rather in the form of a pre-made $2 \times 2$ table, you can use weights to enter the data into SPSS. You do not need to enter the 1's and 0's by hand! Let's say you have the following data table. 
+
+```{r}
+r1 <- c("10","30","40")
+r2 <- c("9","80","89")
+r3 <- c("19","110","129")
+tbl <- rbind(r1,r2,r3)
+colnames(tbl) <- c("Disease+","Disease-","Total")
+rownames(tbl) <- c("Exposed+","Exposed-","Total")
+kable(as.data.frame(tbl),caption = "Hypothetical data given as a table") %>% kable_styling()
+```
+
+To enter these data into SPSS, open a blank SPSS spreadsheet and populate it as follows. 
+
+```{r}
+Disease <- c("Disease+","Disease-","Disease+","Disease-")
+Exposure <- c("Exposed+","Exposed+","Exposed-","Exposed-")
+Counts <- c(10,30,9,80)
+df <- as.data.frame(cbind(Disease,Exposure,Counts))
+kable(df,caption = "Hypothetical data entered in SPSS") %>% kable_styling()
+```
+
+Now weight the data in SPSS by the count variable:
+
+1) ___Data___ $\rightarrow$ ___Weight Cases___
+2) Select "Weight cases by" and move the count variable into the box below.
+3) Click OK and proceed according as if the data were given in raw form. 
+
+### Expected Counts
+
+Tabulated are presented with the _observed_ counts in each cell. It will be useful for many statistical tests to also compute the _expected_ counts for each cell. This expected value is based on the marginal row count, marginal column count, and grand total count. For the cell in row 1, column 1, the expected count is obtained by multiplying the row total by the column total and dividing that number by the grand total. The expected counts for the general table above are as follows. 
+
+```{r}
+r1 <- c("(a+b)(a+c)/(a+b+c+d)","(a+b)(b+d)/(a+b+c+d)","a+b")
+r2 <- c("(c+d)(a+c)/(a+b+c+d)","(c+d)(b+d)/(a+b+c+d)","c+d")
+r3 <- c("a+c","b+d","a+b+c+d")
+tbl <- rbind(r1,r2,r3)
+colnames(tbl) <- c("A+","A-","Total")
+rownames(tbl) <- c("B+","B-","Total")
+kable(as.data.frame(tbl),caption = "Expected counts") %>% kable_styling()
+```
+
+To create a $2 \times 2$ table in SPSS with both observed and expected counts:
+
+1) ___Analyze___ $\rightarrow$ ___Descriptive Statistics___ $\rightarrow$ ___Crosstabs___ .
+2) Add the desired row variable to the Row(s) box and the desired column variable to the Column(s) box. 
+3) Click the "Cells" button and select the option for either observed or expected or both.  
+4) Click continue.
+5) Click OK. 
+
+## Measures of Association
+
+The ___risk___ of an event is a term used synonomously in the class with probability. So, the risk of an event $A$ happening, $Risk(A) = P(A)$. Risks can be conditional or unconditional. 
+
+The ___odds___ of an event is defined as the probability of an event happening divided by the probability of the event not happening. So, the odds of an event $A$, $Odds(A) = P(A)/(1-P(A))$. Odds can be conditional or unconditional. 
+
+The ___risk ratio___ (relative risk) is the probability of an event in one group divided by the probability of an event in another group. Note that the risk ratio is the ratio of two conditional probabilities. For a generic event $A$ and two groups the relative risk is 
+
+$$RR = \frac{P(A|Group = 1)}{P(A|Group = 2)}$$
+
+The ___odds ratio___ is the ratio of the odds in group 1 divided by the odds in group 2. Similar to relative risk, the odds ratio is a ratio of two conditional odds. 
+
+$$OR = \frac{Odds(A|Group = 1)}{Odds(A|Group = 2)} = \frac{P(A|Group = 1)/(1-P(A|Group = 1))}{P(A|Group = 2)/(1-P(A|Group = 2))}$$
+
+To compute measures of association in SPSS:
+
+1) ___Analyze___ $\rightarrow$ ___Descriptive Statistics___ $\rightarrow$ ___Crosstabs___
+2) To compute relative risk, click on the Cells button and select row percentages. Click continue.
+3) To compute odds ratios, click on the Statistics button and select risk. Click continue.
+4) Click OK. 
+
+## Pearson's Chi-Square Test
+
+Pearson's $\chi^2$ test is used to test whether there is independence between the row variable and the column variable in a $2 \times 2$ table. This test relies on the asympototic normality of a test statistic based on the differences between the observed and expected count in each cell. As such, it requires a large sample size, namely that the expected cell counts are all greater than 5. 
+
+The setup of hypotheses for Pearson's $\chi^2$ test are as follows, where $A$ is a column variable, $B$ is a row variable, and the symbol $\perp$ denotes independence between two random variables. 
+
+$$H_0: A \perp B$$
+$$H_A: A \stackrel{not}{\perp} B$$
+
+Like the other hypothesis tests we have done, Pearson's $\chi^2$ test produces a p-value that can be used to reject/fail to reject the null hypothesis. 
+
+To conduct Pearson's $\chi^2$ test in SPSS: 
+
+1) ___Analyze___ $\rightarrow$ ___Descriptive Statistics___ $\rightarrow$ ___Crosstabs___
+2) Click Statistics and select Chi-Square. Click continue.
+3) Click OK. 
+4) The corresponding p-value is listed in the output under "Pearson's Chi-Square"
+
+## Fisher's Exact Test
+
+Fisher's exact test can be used when the expected cell counts are too small for Pearson's $\chi^2$ test. The p-value for Fisher's exact test are given in the same output as the Pearson's $\chi^2$.
+
+To conduct Fisher's exact test in SPSS: 
+
+1) ___Analyze___ $\rightarrow$ ___Descriptive Statistics___ $\rightarrow$ ___Crosstabs___
+2) Click Statistics and select Chi-Square. Click continue.
+3) Click OK. 
+4) The corresponding p-value is listed in the output under "Fisher's Exact Test"
+
+## Mantel-Haenszel chi-square (for ordinal data)
+
+The M-H $\chi^2$ test for ordinal data is similar to Pearson's $\chi^2$ but requires fewer degrees of freedom (it only requires 1 df). It is given in the same output as Pearson's $\chi^2$ and Fisher's exact. 
+
+To conduct the M-H trend test in SPSS: 
+
+1) ___Analyze___ $\rightarrow$ ___Descriptive Statistics___ $\rightarrow$ ___Crosstabs___
+2) Click Statistics and select Chi-Square. Click continue.
+3) Click OK. 
+4) The corresponding p-value is listed in the output under "Linear-by-Linear Association"
+
+## Cochran-Mantel-Haenszel
+
+A CMH odds ratio has the same interpretation as a regular odds ratio, but it is adjusted for a given stratifying variable. For example if we stratify our $2 \times 2$ table into two different $2 \times 2$ tables where the first corresponds to males and the second corresponds to females, the CMH odds ratio would measure the association between row and column variables after adjusting for gender. 
+
+1) ___Analyze___ $\rightarrow$ ___Descriptive Statistics___ $\rightarrow$ ___Crosstabs___
+2) To compute CMH odds ratios and CIs, add the stratifying variable to the "levels" box in Crosstabs.
+3) Click Statistics and select "Cochran's and Mantel-Haenszel statistics"
+
+## McNemar’s test and Odds ratio for matched pairs
+
+McNemar's test is used to test association between row and column variables when data are paired. 
+
+To use McNemar's test:
+
+1) ___Analyze___ $\rightarrow$ ___Descriptive Statistics___ $\rightarrow$ ___Crosstabs___
+2) Click Statistics and select McNemar's. Click Continue.
+3) Click OK.
