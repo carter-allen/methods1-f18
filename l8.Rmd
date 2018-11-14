@@ -1,0 +1,34 @@
+---
+title: "Lab 8 - ANOVA"
+author: "Carter Allen"
+date: "11/14/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(patchwork)
+```
+
+## ANOVA
+
+As discussed in lecture, ANOVA is a procedure used to compare more than 2 means. We will do both one-way and two-way ANOVA, referring to the number of independent variables used in the ANOVA model. Both one-way and two-way ANOVA can be carried out in SPSS with the following commands.
+
+To run an ANOVA in SPSS:
+
+1) ___Analyze___ $\rightarrow$ ___General linear model___ $\rightarrow$ ___Univariate___
+
+2) Select one dependent variable by moving it to the dependent variable box.
+
+3) Select one or two (corresponding to one-way or two-way). Note that when doing two-way ANOVA, you must remove the interaction term. Click on "Model" then select "Build terms" and under Build Term(s) select Main effects. Move both factors into the model box.
+
+4) Click OK to run ANOVA without any other further options. 
+
+## Testing Assumptions and Post-Hoc Comparisons
+
+You can evaluate the assumptions of the ANOVA model and conduct post-hoc comparisons by selecting further options. To evaluate model assumptions, select the appropriate plots/tests under Options in the Univariate model dialogue. To conduct post-hoc comparisons of means, click "Post-Hoc" and select the appropriate post-hoc comparison. 
+

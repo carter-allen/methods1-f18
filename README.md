@@ -10,6 +10,7 @@
 - [Lab 5 - Hypothesis Testing for One Population](l5.html)
 - [Lab 6 - Comparing Populations & Non-parametrics](l6.html)
 - [Lab 7 - Contingency Tables](l7.html)
+- [Lab 8 - ANOVA](l8.html)
 
 ### Data
 
@@ -36,3 +37,7 @@
 - [Lab 5](Lecture 5 Slides.pptx)
 - [Lab 6](Lecture 6 slides.pptx)
 - [Lab 7](Lecture 7 slides.pptx)
+- [Lab 9](Lecture 9 Slides.pptx)
+- [Lab 10](Lecture 10 slides.pptx)
+- [Lab 11](Lecture 11 slides.pptx)
+- [Lab 12](Lecture 12 Slides.pptx)
