@@ -1,0 +1,125 @@
+---
+title: "Lab 9 - Correlation & Regression"
+author: "Carter Allen"
+date: "11/28/2018"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(patchwork)
+```
+
+## Intoduction
+
+So far in this class, we have covered methods for testing relationships between (i) two categorical variables (think back to the contingency tables material) and between (ii) a categorical variable and a continuous variable (either t-tests or ANOVA). The next natural progression will be to look at ways of measuring relationships between two continuous variables. 
+
+## Visualizing Two Continuous Variables
+
+A scatterplot is generally the most appropriate plot for displaying the relationship between two continuous variables. For two continuous numeric random variables $X$ and $Y$, a scatterplot displays a point on the coordinate plane for each $(X,Y)$ pair.
+
+<center>
+
+```{r,echo=FALSE,fig.cap="Scatterplot of two continuous variables."}
+x <- rnorm(1000)
+y <- rnorm(1000,x)
+qplot(x,y)
+```
+
+</center>
+
+In many research settings, we designate one variable to be the ___outcome___ and one variable to be the ___predictor___. The implication here is that changing the predictor variable will result is some corresponding change in the outcome variable. However, we do not assume the reverse is true. That is, we are not interested in observing how changing the outcome variable causes a change in the predictor variable. In fact, usually the outcome variable is observable but not controllable in most experimental settings, while the predictor variable can be manipulated by the experimenter. It is also the case often that neither the predictor variable nor the outcome variable are controllable by experimentation. In this case, we are making observations on both variables and checking how one variable tends to change as another changes. As a convention, we place the outcome on the vertical axis and the predictor variable on the horizontal axis. 
+
+## Measuring Association
+
+A plot helps us vizualize how one variable changes _along with_ another variable, but how can we measure how associated two variables are? One such measure of the _linear_ relationship between two variables is (Pearson) ___correlation___. The correlation coefficient $\rho$ ranges between -1 and 1. Values closer to -1 or 1 indicate stronger linear correlation, while values closer to 0 indicate weaker linear correlation. Note that just because two variables are not linearly correlated does not mean they are not associated. You can see how a scatter plot might look for correlated data with different values of $\rho$ using the plot below. 
+
+```{r,echo=FALSE,fig.height=20}
+#
+# This is a Shiny web application. You can run the application by clickin
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+
+library(shiny)
+library(mvtnorm)
+library(ggplot2)
+
+# Define UI for application that draws a histogram
+ui <- fluidPage(
+
+    # Application title
+    titlePanel("Correlation"),
+
+    # Sidebar with a slider input for number of bins 
+
+        # Show a plot of the generated distribution
+        mainPanel(
+          sliderInput("corr",
+                        "Correlation value",
+                        min = -1,
+                        max = 1,
+                        value = 0,
+                        step = 0.0001),
+           plotOutput("distPlot")
+        )
+    )
+
+# Define server logic required to draw a histogram
+server <- function(input, output) {
+
+    output$distPlot <- renderPlot({
+        # generate bins based on input$bins from ui.R
+        theme_set(theme_classic())
+        rho <- input$corr
+        X <- rmvnorm(500,c(0,0),matrix(c(1,rho,rho,1),nrow = 2,byrow = TRUE))
+        # draw the histogram with the specified number of bins
+        qplot(X[,1],X[,2],xlab = "X",ylab = "Y") + 
+          scale_x_continuous(limits = c(-5,5)) + 
+          scale_y_continuous(limits = c(-5,5))
+      
+    }
+    )
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server,options = list(height = 500))
+```
+
+Similar to correlation is the ___coefficient of determination___ or $R^2$. The coefficient of determination is simply the square of correlation. Since $\rho$ ranges from -1 to 1, $\rho^2$ must range from 0 to 1. The coefficient of determinations measures the proportion of variability in $Y$ explained by $X$. The higher the $R^2$, the stronger the linear relationship between $X$ and $Y$.
+
+You can also measure the association between two variables with ___Spearman's correlation___, which relies on ranks instead of squared distances.
+
+### Measures of Association in SPSS
+
+To compute correlation coefficients and test their significance in SPSS, use the following steps. 
+
+1) ___Analyze___ $\rightarrow$ ___Correlate___ $\rightarrow$ ___Bivariate___
+2) Choose the variables you would like to compute correlations between. If you provide more than two variables, SPSS will return the correlation between each possible pair of variables. Make sure each variable here is of type scale. 
+3) Choose either Pearson correlation, Spearman correlation, or both. 
+
+## Linear Regression
+
+To develop a more rich description of the relationship between two contiuous variables, you can fit a linear regression model. Linear regression seeks to fit the following model to the data
+
+$$Y = \beta_0 + \beta_1X + \epsilon$$
+
+where $Y$ is the observed outcome variable, $X$ is the predictor variable, $\beta_0$ is the y-intercept of the regression model, and $\beta_1$ is the slope of the regression model. The $\epsilon$ term accounts for the random error between the regression model and the observed data. We have both $X$ and $Y$ in the data, so the goal of linear regression if to find the $\beta_0$ and $\beta_1$ that best fit the data. 
+
+Of course, our estimates of $\beta_0$ and $\beta_1$ can not be know for certain, so we choose the estimates such that the total model error is minimized. To visualize how this works graphically, use [go here](https://gallery.shinyapps.io/simple_regression/).
+
+### Linear Regression in SPSS
+
+To fit a linear regression model in SPSS, use the following steps. 
+
+1) ___Analyze___ $\rightarrow$ ___Regression___ $\rightarrow$ ___Linear___
+2) Add the outcome variable to the dependent box and the predictor variable to the independent box.
+3) Click OK. 

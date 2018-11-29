@@ -11,6 +11,7 @@
 - [Lab 6 - Comparing Populations & Non-parametrics](l6.html)
 - [Lab 7 - Contingency Tables](l7.html)
 - [Lab 8 - ANOVA](l8.html)
+- [Lab 9 - Correlation & Regression](https://carter-allen.shinyapps.io/lab9/)
 
 ### Data
 
