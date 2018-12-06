@@ -1,0 +1,639 @@
+---
+title: "Final Exam Review"
+author: "Methods I"
+date: "Fall 2018"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE,warning=FALSE,message=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(tidyverse)
+library(sn)
+library(VennDiagram)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+theme_set(theme_void())
+```
+
+# Exam 1 Material
+
+##
+
+Describe characteristics of the data presented in the following graph.
+
+```{r,echo=FALSE,message=FALSE,warning=FALSE}
+X <- 0:30
+Y <- dpois(X,11)
+ggplot() + geom_col(aes(x = X, y = Y))
+```
+
+##
+
+For the preceding graph, will the mean be greater than the median?
+
+A) Yes
+B) No
+C) Not enough info to say
+
+> - __1__
+
+## 
+
+For a sample of $n$ observations from a discrete random variable, such as the number of customers to arrive at a store in an hour, when will the median be a decimal?
+
+A) When $n$ is small.
+B) When $n$ is large. 
+C) When $n$ is even. 
+D) When $n$ is odd.
+E) We can't really say either way. 
+
+> - __4__
+
+## 
+
+When outliers are present in a data set, we should always:
+
+A) Discard them
+B) Use new data
+C) Investigate the data collection methods to see if they are valid observations
+D) Proceed with them in the data
+E) None of the above
+
+> - __3__
+
+## 
+
+Outliers will ___always___ cause the mean to increase
+
+A) True
+B) False
+
+> - __False__
+
+## 
+
+Outliers will ___always___ cause the variance to increase
+
+A) True
+B) False
+
+> - __True__
+
+##
+
+Outliers will ___always___ cause the standard deviation to increase
+
+A) True
+B) False
+
+> - __True__
+
+##
+
+We collect a sample of size $n = 10$ that ranges from a minimum value of -8 to a maximum value of 12. We discover the maximum value was recorded incorrectly and should actually read 15. Compared to the first sample, the corrected sample will have
+
+A) Larger mean and larger median
+B) Larger mean and larger variance
+C) Larger variance and larger median
+D) Larger median and larger standard deviation
+E) Not enough info to know
+
+> - __1__
+
+##
+
+We collect an initial sample of size $n = 100$. An additional 50 observations are subsequently collected to give a total sample size of $n = 150$. Which of the following is true of the second sample with respect to the first?
+
+A) The mean will be higher.
+B) The variance will be higher. 
+C) The standard deviation will be higher. 
+D) The median will be lower. 
+E) Cannot make a diffinitive statement.
+
+> - __5__
+
+##
+
+Assume distribution of IQ scores is normal with mean 100, but we don't know the standard deviation. If 25% of the observations are below 90, then what is the percentage of observations above 110?
+
+A) 100%
+B) 50% 
+C) 25%
+D) 0%
+E) Not enough info
+
+> - __3__
+
+##
+
+Define ___sensitivity___
+
+A) The probability of observing a test statistic more extreme than what was observed
+B) The probability the test is positive, given the disease status is negative
+C) The probability the test is negative, given the disease status is negative
+D) The probability the test is positive, given the disease status is positive
+E) The probability of having a disease, given you tested positive
+
+> - __4__
+
+##
+
+Define ___specificity___
+
+A) The probability of observing a test statistic more extreme than what was observed
+B) The probability the test is positive, given the disease status is negative
+C) The probability the test is negative, given the disease status is negative
+D) The probability the test is positive, given the disease status is positive
+E) The probability of having a disease, given you tested positive
+
+> - __3__
+
+## 
+
+The ___positive predictive value___ of a test is 0.10. In a group of 100 people who tested positive, how many do we expect to ___not___ have the disease?
+
+A) 100
+B) 90
+C) 200
+D) 0
+E) Not enough info
+
+> - __2__
+
+## 
+
+What is the name of the mathematical rule in probability that allows us to convert between sensitivity/specificity and PPV/NPV?
+
+A) Central Limit Theorem
+B) Addition Rule
+C) Law of Large Numbers
+D) Bayes' Rule
+E) Fundamental Theorem of Calculus
+
+> - __4__
+
+## 
+
+Are the two events represented below mutually exclusive?
+
+```{r, warning=FALSE,message=FALSE}
+grid.newpage()
+d <- draw.pairwise.venn(area1 = 15, area2 = 5, cross.area = 0, category = c("Morning People", 
+    "Afternoon People"), lty = rep("blank", 2), fill = c("light blue", "green"), 
+    alpha = rep(0.5, 2), cat.pos = c(0, 180), euler.d = TRUE, sep.dist = 0.03, 
+    rotation.degree = 45)
+```
+
+> - __Yes__
+
+## 
+
+Are the two events represented below independent?
+
+```{r, warning=FALSE,message=FALSE}
+grid.newpage()
+d <- draw.pairwise.venn(area1 = 15, area2 = 5, cross.area = 0, category = c("Morning People", 
+    "Afternoon People"), lty = rep("blank", 2), fill = c("light blue", "green"), 
+    alpha = rep(0.5, 2), cat.pos = c(0, 180), euler.d = TRUE, sep.dist = 0.03, 
+    rotation.degree = 45)
+```
+
+> - __No__
+
+## 
+
+For a total class size of $n = 20$, what is the probability of being a morning person ___or___ an afternoon person?
+
+```{r, warning=FALSE,message=FALSE}
+grid.newpage()
+d <- draw.pairwise.venn(area1 = 15, area2 = 5, cross.area = 0, category = c("Morning People", 
+    "Afternoon People"), lty = rep("blank", 2), fill = c("light blue", "green"), 
+    alpha = rep(0.5, 2), cat.pos = c(0, 180), euler.d = TRUE, sep.dist = 0.03, 
+    rotation.degree = 45)
+```
+
+> - __1__
+
+## 
+
+For a total class size of $n = 20$, what is $P(dogs)$?
+
+```{r, warning=FALSE,message=FALSE}
+grid.newpage()
+d <- draw.pairwise.venn(area1 = 15, area2 = 13, cross.area = 10, category = c("Dog People", 
+    "Cat People"), lty = rep("blank", 2), fill = c("light blue", "green"), 
+    alpha = rep(0.5, 2), cat.pos = c(320,45), euler.d = TRUE, sep.dist = 0.03, 
+    rotation.degree = 45)
+```
+
+> - __15/20__
+
+##
+
+For a total class size of $n = 20$, what is $P(cats)$?
+
+```{r, warning=FALSE,message=FALSE}
+grid.newpage()
+d <- draw.pairwise.venn(area1 = 15, area2 = 13, cross.area = 10, category = c("Dog People", 
+    "Cat People"), lty = rep("blank", 2), fill = c("light blue", "green"), 
+    alpha = rep(0.5, 2), cat.pos = c(320,45), euler.d = TRUE, sep.dist = 0.03, 
+    rotation.degree = 45)
+```
+
+> - __13/20__
+
+## 
+
+For a total class size of $n = 20$, are the events "liking dogs" and "liking cats" independent?
+
+```{r, warning=FALSE,message=FALSE}
+grid.newpage()
+d <- draw.pairwise.venn(area1 = 15, area2 = 13, cross.area = 10, category = c("Dog People", 
+    "Cat People"), lty = rep("blank", 2), fill = c("light blue", "green"), 
+    alpha = rep(0.5, 2), cat.pos = c(320,45), euler.d = TRUE, sep.dist = 0.03, 
+    rotation.degree = 45)
+```
+
+> - __No__
+
+## 
+
+Which of the following is the definition of a ___statistic___?
+
+A) A mathematical function of data
+B) Any numeric quantity.
+C) The true value of the population you are sampling
+D) None of the above
+
+> - __1__
+
+##
+
+Which of the following defines a ___parameter___?
+
+A) A mathematical function of data
+B) Any numeric quantity.
+C) The true value of the population you are sampling
+D) None of the above
+
+> - __3__
+
+##
+
+We collect an initial sample of size $n = 100$. An additional 50 observations are subsequently collected to give a total sample size of $n = 150$. Which of the following is true of the second sample with respect to the first?
+
+A) The mean will be higher.
+B) The variance will be higher. 
+C) The standard deviation will be higher. 
+D) The standard error of the mean will likely be lower. 
+E) Cannot make a diffinitive statement.
+
+> - __4__
+
+## 
+
+An experimenter applies a treatment to a single mouse to see whether its disease status improves or not. What is the most appropriate distribution for modeling this kind of data?
+
+A) Poisson
+B) Normal
+C) Binomial
+D) Bernoulli
+E) None of the above
+
+> - __4__
+
+## 
+
+An experimenter applies a treatment to 10 mice to see whether each mouse's disease status improves or not. The number of mice whose status improved is recorded. What is the most appropriate distribution for modeling this kind of data?
+
+A) Poisson
+B) Normal
+C) Binomial
+D) Bernoulli
+E) None of the above
+
+> - __3__
+
+##
+
+A researcher observes the number of rare birds flying over a lookout station in a 4 hour period. The number of sightings per hour is recorded. What is the most appropriate distribution for modeling this kind of data?
+
+A) Poisson
+B) Normal
+C) Binomial
+D) Bernoulli
+E) None of the above
+
+> - __1__
+
+## 
+
+Recall the following result in statistics: _As the sample size increases, the sample mean will approach the population mean_. Which statistical theorem states this important result?
+
+A) Law of Large Numbers
+B) Central Limit Theorem
+C) P-value theorem
+D) Fundamental Rule of Statistics
+E) None of the above
+
+> - __1__
+
+##
+
+Recall the following result in statistics: _As the sample size increases, the sampling distribution of the sample mean takes on a normal distribution with variance tending towards zero_. 
+
+A) Law of Large Numbers
+B) Central Limit Theorem
+C) P-value theorem
+D) Fundamental Rule of Statistics
+E) None of the above
+
+> - __2__
+
+##
+
+Let $X \sim N(0,10)$ and $Y \sim N(5,2)$, independently. What is $E[X-Y]$?
+
+A) 1
+B) 0
+C) 10
+D) 5
+E) None of the above
+
+> - $E[X - Y] = E[X] - E[Y] = 10 - 5 = 5$
+
+##
+
+Let $X \sim N(0,10)$ and $Y \sim N(5,2)$, independently. What is $Var[X-Y]$?
+
+A) 10
+B) 0
+C) 5
+D) 12
+E) None of the above
+
+> - $Var[X-Y] = Var[X] + Var[Y] - 2Cov[X,Y] = 10 + 2 - 0 = 12$ 
+
+# Exam 2
+
+##
+
+Define a p-value
+
+> - __The probability of observing a test statistic as extreme as or more extreme than what was observed given that the null hypothesis is true__
+
+## 
+
+You read a paper report a mean and confidence interval as $12.5 \ (95\% \ CI:[10.2,14.8])$. What is the correct interpretation of this result?
+
+A) There is a $5\%$ probability that the sample mean falls between 10.2 and 14.8.
+B) There is a $95 \%$ chance the sample mean falls between 10.2 and 14.8.
+C) With $95 \%$ confidence, we expect the true population mean to be between 10.2 and 14.8.
+D) With $95 \%$ confidence, we expect the true population mean to be equal to 12.5.
+E) None of the above.
+
+> - __3__
+
+##
+
+What is mean by the word "confidence" in a confidence interval?
+
+A) It is basically the same as probability.
+B) It is another term for statistical significance. 
+C) It is the number of times, over repeated experimentation, that the parameter falls within the confidence interval.
+D) It is a reference to strong correlation.
+E) None of the above. 
+
+> - __3__
+
+## 
+
+Why do we even need to distinguish between probability and confidence?
+
+> - __We are estimating parameters, which are fixed quantities. It does not make sense to make probability statements about the parameter. We instead make statements about our confidence bounds, which are considered random variables.__
+
+
+##
+
+In general, what to we expect the confidence interval to do as the sample size grows?
+
+A) Narrow
+B) Widen
+C) Invert
+D) Stay the same
+E) None of the above
+
+> - __A__
+
+##
+
+What is the term for the event of rejecting a null hypothesis that is true in reality?
+
+A) $\alpha$
+B) Sensitivity
+C) Type-II error
+D) Type-I error
+E) None of the above
+
+> - __4__
+
+##
+
+What is the term for the probability of rejecting a null hypothesis that is true in reality?
+
+A) $\alpha$
+B) Sensitivity
+C) Type-II error
+D) Type-I error
+E) None of the above
+
+> - $\alpha$
+
+## 
+
+What is the definition of statistical power?
+
+> - __The probability of rejecting the null hypothesis, given it is false.__
+
+##
+
+How is power related to $\beta$, the probability of a Type-II error?
+
+A) No relation
+B) $power = \beta^2$
+C) $power = 1 - \beta$
+D) $power = \beta$
+E) None of the above
+
+> - __3__
+
+## 
+
+When are non-parametric tests useful?
+
+A) When the p-value > 0.05
+B) When the sample size is small
+C) When the variability is large
+D) When the assumptions behind parametric tests do not hold. 
+E) None of the above. 
+
+> - __4__
+
+## 
+
+What is the drawback of using non-parametric tests vs. parametric tests?
+
+A) Non-parametric tests can be less powerful
+B) They take longer
+C) They are out of date
+D) They inflate the mean
+E) None of the above
+
+> - __1__
+
+##
+
+If I wanted to do a t-test for paired data, but the assumptions weren't defensible, which non-parametric test should I choose?
+
+A) Fisher's exact test
+B) Wilcoxon signed rank test
+C) Wilcoxon rank sum test
+D) Kappa statistic
+E) None of the above
+
+> - __2__
+
+If I wanted to do a t-test for two independent samples, but the assumptions weren't defensible, which non-parametric test should I choose?
+
+A) Fisher's exact test
+B) Wilcoxon signed rank test
+C) Wilcoxon rank sum test
+D) Kappa statistic
+E) None of the above
+
+> - __3__
+
+
+
+##
+
+Under what circumstances will the odds ratio be a good approximation of relative risk?
+
+A) When the event is rare
+B) When the exposure is common
+C) When the p-value is large
+D) When the relative risk is close to 0.5
+E) Not enough info
+
+> - __1__
+
+## 
+
+What statistical procedure would be used to compare the means between more than two groups?
+
+A) Regression
+B) t-test
+C) ANOVA
+D) Pearson's Chi-square
+E) None of the above
+
+> - __3__ 
+
+##
+
+What is a correct test to assess association between two categorical variables?
+
+A) Regression
+B) t-test
+C) ANOVA
+D) Pearson's Chi-square
+E) None of the above
+
+> - __4__ 
+
+##
+
+What is a correct test to compare means of two paired samples?
+
+A) Regression
+B) t-test
+C) ANOVA
+D) Pearson's Chi-square
+E) None of the above
+
+> - __2__ 
+
+##
+
+What statistic is used to quantify the degree of agreement between two categorical variables?
+
+A) Kappa statistic
+B) P-value
+C) Bonferroni's test
+D) Mean
+E) None of the above
+
+> - __1__
+
+# Post Exam 2
+
+##
+
+Pearson's correlation measures:
+
+A) The relationship between two variables
+B) The significance of the t-test
+C) The causal relationship between two variables
+D) The strength of linear association between two variables
+E) None of the above
+
+> - __4__
+
+##
+
+If two variables display a possitive association and a correlation value close to 1, we expect that
+
+A) As one variable increases, the other tends to increase as well
+B) As one variable decreases, the other tends to increase
+C) As one variable increases, the other stays the same
+D) The p-value is significant
+E) None of the above
+
+> - __1__
+
+##
+
+In the regression equation $Y = \beta_0 + \beta_1 X + \epsilon$, what terms do we estimate?
+
+A) $\beta_1$ only
+B) X and Y
+C) X and $\epsilon$
+D) $\beta_0$ and $\beta_1$
+E) None of the above
+
+> - __4__
+
+##
+
+A linear regression model can be used for all of the following ___except___
+
+A) Describing the linear association between two variables
+B) Proving causation
+C) Predicting a new observation
+D) Testing hypotheses
+E) Describing the degree of variability in an outcome explained by a predictor
+
+> - __2__
+
+## 
+
+What is the difference between simple linear regression and multiple linear regression?
+
+A) Multiple linear regression involves one outcome variable modeled as a function of multiple predictor variables.
+B) Simple linear regression doesn't use predictor variables.
+C) Multiple linear regression involved multiple outcome variables. 
+D) Simple linear regression is more accurate. 
+E) None of the above
+
+> - __1__
